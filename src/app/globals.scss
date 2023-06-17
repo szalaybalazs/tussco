@@ -14,6 +14,7 @@ body {
     rgb(var(--background-start-rgb)); */
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 html,
@@ -22,6 +23,10 @@ body {
   height: -webkit-fill-available;
   // background: #f2eecb11;
   overflow-x: hidden;
+}
+
+html {
+  overflow-y: hidden;
 }
 
 div.image-container {
