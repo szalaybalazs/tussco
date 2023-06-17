@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import { apps } from "../app";
 import { Metadata } from "next";
 import { marked } from "marked";
+import Link from "next/link";
 
 export const generateMetadata = ({
   params,
@@ -66,6 +67,7 @@ const page: FunctionComponent<ipageProps> = ({ params: { app: id } }) => {
           <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
       </a>
+
       <pre className="px-8 font-sans leading-loose text-lg font-medium text-gray-600">
         {app.content}
       </pre>
@@ -75,6 +77,29 @@ const page: FunctionComponent<ipageProps> = ({ params: { app: id } }) => {
           dangerouslySetInnerHTML={{ __html: marked.parse(app.markdown) }}
         />
       )}
+      <div className="mt-8 pt-8 border-t">
+        <Link
+          className="ml-8 mb-4 flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
+          href={`/${app.href}/privacy-policy`}
+        >
+          <span>Privacy Policy</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </Link>
+      </div>
     </div>
   );
 };
