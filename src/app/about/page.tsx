@@ -4,7 +4,7 @@ interface ipageProps {}
 
 const page: FunctionComponent<ipageProps> = () => {
   return (
-    <div className="flex-1 px-4 max-w-4xl w-full mx-auto pt-16 text-3xl text-gray-600 leading-relaxed">
+    <div className="flex-1 px-4 max-w-2xl w-full mx-auto pt-16 text-3xl text-gray-600 leading-relaxed">
       <p>
         <strong className="text-gray-700">Hi, 👋🏻 I&apos;m László.</strong> Lorem
         ipsum, dolor sit amet consectetur adipisicing elit. Fuga ut voluptas
