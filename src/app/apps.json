@@ -1,0 +1,38 @@
+[
+  {
+    "id": "sticker",
+    "name": "Sticker",
+    "description": "Sticker is a simple app that allows you to create stickers from your photos and share them with your friends.",
+    "url": "https://sticker-1.herokuapp.com/",
+    "releaseDate": "2022-05-12",
+    "banner": "/vat/banner.jpg",
+    "icon": "/vat/icon.png",
+    "background": "linear-gradient(#C4B5FD, #6D28D9)",
+    "color": "white",
+    "href": "https://appstore.com"
+  },
+  {
+    "id": "vat",
+    "name": "VAT Calculator",
+    "description": "VAT Calculator is a simple app that allows you to calculate VAT.",
+    "url": "https://vat-calculator-1.herokuapp.com/",
+    "releaseDate": "2019-05-12",
+    "banner": "/vat/banner.jpg",
+    "icon": "/vat/icon.png",
+    "background": "linear-gradient(#5EEAD4, #0F766E)",
+    "color": "white",
+    "href": "https://appstore.com"
+  },
+  {
+    "id": "battery",
+    "name": "Remote Battery",
+    "description": "VAT Calculator is a simple app that allows you to calculate VAT.",
+    "url": "https://vat-calculator-1.herokuapp.com/",
+    "releaseDate": "2019-05-12",
+    "banner": "/vat/banner.jpg",
+    "icon": "/vat/icon.png",
+    "background": "linear-gradient(#F43F5E, #9F1239)",
+    "color": "white",
+    "href": "https://appstore.com"
+  }
+]

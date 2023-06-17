@@ -1,0 +1,73 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb)); */
+  display: flex;
+  flex-direction: column;
+}
+
+html,
+body {
+  height: 100%;
+  height: -webkit-fill-available;
+  // background: #f2eecb11;
+  overflow-x: hidden;
+}
+
+div.image-container {
+  max-height: calc(100vh - 48px);
+  max-width: min(1100px, 100%);
+  // @media screen and (min-width: 1400px) {
+  //   max-width: min(1200px, 100%);
+  // }
+}
+
+div.success {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 120ms;
+  opacity: 1;
+  // visibility: hidden;
+  span {
+    width: 48px !important;
+    opacity: 0;
+    height: 48px !important;
+    border-radius: 24px !important;
+    background-color: rgb(34, 219, 105) !important;
+    position: relative !important;
+    transform: scale(0) rotate(45deg);
+    animation: 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s 1 normal
+      forwards running appearAnim;
+
+    &::after {
+      content: "";
+      visibility: visible !important;
+      animation: 0.15s ease-out 0.45s 1 normal forwards running
+        animation-10zc5ks !important;
+      position: absolute !important;
+      border-right: 4px solid rgb(255, 255, 255) !important;
+      border-bottom: 4px solid rgb(255, 255, 255) !important;
+      border-top-color: rgb(255, 255, 255) !important;
+      border-left-color: rgb(255, 255, 255) !important;
+      bottom: 15px !important;
+      left: 17px !important;
+      height: 20px !important;
+      width: 11px !important;
+      box-sizing: border-box !important;
+    }
+  }
+  padding-bottom: 10%;
+}
