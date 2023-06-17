@@ -77,3 +77,31 @@ div.success {
   }
   padding-bottom: 10%;
 }
+
+div.markdown {
+  h1 {
+    @apply mt-8 text-2xl font-bold text-gray-800;
+  }
+  h2 {
+    @apply mt-6 text-xl font-bold text-gray-800;
+  }
+  h3 {
+    @apply mt-4 text-lg font-bold text-gray-800;
+  }
+  p {
+    @apply mt-2 text-lg font-medium text-gray-500;
+  }
+  ul,
+  ol {
+    @apply list-disc;
+  }
+  pre {
+    @apply bg-gray-900 rounded text-gray-300 px-4 py-3 mt-2;
+  }
+  a {
+    @apply text-indigo-500 underline;
+  }
+  table {
+    @apply w-full border-collapse border border-gray-300 mt-2;
+  }
+}

@@ -10,6 +10,8 @@ interface iApp {
   description?: string;
   color?: string;
   background?: string;
+  content?: string;
+  markdown?: string;
 }
 
 export const apps = (appList as iApp[]).sort(
