@@ -8,7 +8,7 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
   app = "iOS App",
 }) => {
   return (
-    <div className="flex-1 px-4 max-w-4xl w-full mx-auto pt-16 text-lg font-medium text-gray-500 leading-relaxed mb-24">
+    <div className="flex-1 px-8 max-w-4xl w-full mx-auto pt-16 text-lg font-medium text-gray-500 leading-relaxed mb-24">
       <h1 className="font-bold text-3xl text-gray-700">
         Privacy Policy for {app}
       </h1>
