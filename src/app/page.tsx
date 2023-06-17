@@ -44,7 +44,7 @@ export default function Home() {
               className="absolute left-8 bottom-8"
             >
               <h3 className="text-3xl font-medium">{app.name}</h3>
-              <p className="opacity-80 text-md font-medium mt-1 max-w-sm">
+              <p className="opacity-80 pr-8 text-md font-medium mt-1 max-w-sm">
                 {app.description}
               </p>
             </div>
