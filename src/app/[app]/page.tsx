@@ -80,7 +80,7 @@ const page: FunctionComponent<ipageProps> = ({ params: { app: id } }) => {
       <div className="mt-8 pt-8 border-t">
         <Link
           className="ml-8 mb-4 flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
-          href={`/${app.href}/privacy-policy`}
+          href={`/${app.id}/privacy-policy`}
         >
           <span>Privacy Policy</span>
           <svg
