@@ -6,7 +6,7 @@ interface iFooterProps {}
 
 const Footer: FunctionComponent<iFooterProps> = () => {
   return (
-    <footer className="flex flex-col px-4 sm:flex-row  pt-4 max-w-4xl mb-24 mx-auto w-full border-t border-gray-300 h-[80px]">
+    <footer className="flex flex-col px-4 sm:flex-row  pt-4 max-w-4xl pb-24 gap-8 sm:gap-0 mx-auto w-full border-t border-gray-300 h-[80px]">
       <div className="flex flex-col flex-1 gap-1">
         <h2 className="text-xl font-black text-indigo-500">Tuss Co.</h2>
         <p className="text-md font-medium text-gray-500">Budapest, Hungary</p>
