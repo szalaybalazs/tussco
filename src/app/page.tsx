@@ -25,7 +25,7 @@ export default function Home() {
         {apps.map((app, i) => (
           <Link
             key={app.id}
-            href={app.href ?? "#"}
+            href={`/${app.id}`}
             style={{ background: app.background }}
             className={`group flex flex-col relative overflow-hidden  mb-12 mx-auto rounded-[48px] h-[420px] shrink-0`}
           >
