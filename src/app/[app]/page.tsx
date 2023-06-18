@@ -68,16 +68,16 @@ const page: FunctionComponent<ipageProps> = ({ params: { app: id } }) => {
         </svg>
       </a>
 
-      <pre className="px-8 font-sans leading-loose text-lg font-medium text-gray-600">
+      <pre className="px-8 font-sans leading-loose text-lg font-medium text-gray-600 dark:text-gray-300">
         {app.content}
       </pre>
       {app.markdown && (
         <div
-          className="mx-8 mt-8 border-t markdown"
+          className="mx-8 mt-8 border-t dark:border-gray-700 markdown"
           dangerouslySetInnerHTML={{ __html: marked.parse(app.markdown) }}
         />
       )}
-      <div className="mt-8 pt-8 border-t">
+      <div className="mt-8 pt-8 border-t dark:border-gray-700">
         <Link
           className="ml-8 mb-4 flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
           href={`/${app.id}/privacy-policy`}

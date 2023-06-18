@@ -78,17 +78,18 @@ div.success {
 }
 
 div.markdown {
+  @apply dark:text-gray-500;
   h1 {
-    @apply mt-8 text-2xl font-bold text-gray-800;
+    @apply mt-8 text-2xl font-bold text-gray-800 dark:text-gray-300;
   }
   h2 {
-    @apply mt-6 text-xl font-bold text-gray-800;
+    @apply mt-6 text-xl font-bold text-gray-800 dark:text-gray-300;
   }
   h3 {
-    @apply mt-4 text-lg font-bold text-gray-800;
+    @apply mt-4 text-lg font-bold text-gray-800 dark:text-gray-300;
   }
   p {
-    @apply mt-2 text-lg font-medium text-gray-500;
+    @apply mt-2 text-lg font-medium text-gray-500 dark:text-gray-500;
   }
   ul,
   ol {
@@ -101,6 +102,6 @@ div.markdown {
     @apply text-indigo-500 underline;
   }
   table {
-    @apply w-full border-collapse border border-gray-300 mt-2;
+    @apply w-full border-collapse border border-gray-300 mt-2 dark:border-gray-700;
   }
 }

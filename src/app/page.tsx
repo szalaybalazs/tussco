@@ -16,7 +16,7 @@ export default function Home() {
           <h2 className="text-4xl font-bold mt-12 text-indigo-500">
             Hi, I am László 👋
           </h2>
-          <p className="mt-2 text-lg font-medium text-gray-500">
+          <p className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
             I am an iOS developer & I build indie applications
           </p>
         </div>

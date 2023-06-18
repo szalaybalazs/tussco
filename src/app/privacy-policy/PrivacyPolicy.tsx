@@ -8,8 +8,8 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
   app = "iOS App",
 }) => {
   return (
-    <div className="flex-1 px-8 max-w-4xl w-full mx-auto pt-16 text-lg font-medium text-gray-500 leading-relaxed mb-24">
-      <h1 className="font-bold text-3xl text-gray-700">
+    <div className="flex-1 px-8 max-w-4xl w-full mx-auto pt-16 text-lg font-medium text-gray-500 dark:text-gray-400 leading-relaxed mb-24">
+      <h1 className="font-bold text-3xl text-gray-700 dark:text-gray-300">
         Privacy Policy for {app}
       </h1>
       <p className="mt-4">
@@ -22,7 +22,7 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
         on our website or application. If you have any questions or concerns
         about our privacy policies, feel free to contact me at any time.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         What information does the Application obtain and how is it used?
       </h2>
       <p className="mt-4">
@@ -30,35 +30,35 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
         information about you, such as your name, address, phone number or email
         address.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         How do you handle location data?
       </h2>
       <p className="mt-4">
         The Application does not use or collect any data related to your
         geographic location.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         Can users see their personal data?
       </h2>
       <p className="mt-4">
         The Application itself does not collect, transmit, or maintain user
         data.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         Do you share personal information?
       </h2>
       <p className="mt-4">
         As no personal information is collected, transmitted, or maintained by
         the Application, we do not share personal information with anyone.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         Do advertising companies collect data?
       </h2>
       <p className="mt-4">
         The Application has no facility for collecting, transmitting, or
         maintaining user data, so no data is shared with advertising companies.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         Do you use vendors or analytics providers?
       </h2>
       <p className="mt-4">
@@ -66,7 +66,7 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
         maintaining user data, so no data is shared with vendors or analytics
         providers.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         Do you comply with the Children&apos;s Online Privacy Protection Act
         (COPPA)?
       </h2>
@@ -76,7 +76,9 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
         provided us with information without their consent, he or she should
         contact me.
       </p>
-      <h2 className="font-bold text-xl mt-8 text-gray-700">Contact Me</h2>
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
+        Contact Me
+      </h2>
       If you have any questions about this Privacy Policy, please contact me:
       <ul className="list-disc">
         <li>

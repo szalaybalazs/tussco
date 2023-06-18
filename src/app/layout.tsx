@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Footer from "./Footer";
 import Header from "./Header";
 import "./globals.scss";
@@ -17,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={clsx(inter.className, "dark:bg-gray-800")}>
         <Header />
         {children}
         <Footer />
