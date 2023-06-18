@@ -21,13 +21,13 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="px-4 max-w-4xl w-full mx-auto">
+      <div className="px-4 max-w-4xl lg:max-w-6xl lg:grid-cols-2 2xl:max-w-7xl 2xl:grid-cols-2 4xl:grid-cols-3 4xl:max-w-[1800px] gap-8 mb-12 grid grid-cols-1 w-full mx-auto">
         {apps.map((app, i) => (
           <Link
             key={app.id}
             href={`/${app.id}`}
             style={{ background: app.background }}
-            className={`group flex flex-col relative overflow-hidden  mb-12 mx-auto rounded-[48px] h-[420px] shrink-0`}
+            className={`group w-full flex flex-col relative overflow-hidden mx-auto rounded-[48px] h-[420px] shrink-0`}
           >
             {i === 0 && (
               <span className="bg-black block absolute left-8 top-8 text-white rounded-full px-6 py-2">
