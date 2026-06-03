@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { FunctionComponent } from "react";
-import { apps } from "./app";
+import { getApps } from "./app";
 
-interface iFooterProps {}
-
-const Footer: FunctionComponent<iFooterProps> = () => {
+const Footer = async () => {
+  const apps = await getApps();
   return (
     <footer className="flex flex-col px-4 sm:flex-row pt-4 max-w-4xl mb-12 gap-8 sm:gap-0 mx-auto w-full border-t border-gray-300 dark:border-gray-600">
       <div className="flex flex-col flex-1 gap-1">

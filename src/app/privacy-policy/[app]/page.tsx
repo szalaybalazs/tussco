@@ -1,4 +1,4 @@
-import { apps } from "@/app/app";
+import { getApp } from "@/app/app";
 import PrivacyPolicy from "../PrivacyPolicy";
 import { Metadata } from "next";
 
@@ -8,7 +8,7 @@ export const generateMetadata = async ({
   params: Promise<{ app: string }>;
 }): Promise<Metadata> => {
   const { app: id } = await params;
-  const app = apps.find((app) => app.id === id);
+  const app = await getApp(id);
 
   return {
     title: `Privacy Policy | ${app?.name} | László Tuss`,
@@ -20,7 +20,7 @@ export const generateMetadata = async ({
 
 const index = async ({ params }: { params: Promise<{ app: string }> }) => {
   const { app: id } = await params;
-  const app = apps.find((app) => app.id === id);
+  const app = await getApp(id);
   return <PrivacyPolicy app={app?.name} />;
 };
 

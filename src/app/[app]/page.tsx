@@ -1,6 +1,5 @@
-import { apps } from "../app";
+import { getApp } from "../app";
 import { Metadata } from "next";
-import { marked } from "marked";
 import Link from "next/link";
 
 export const generateMetadata = async ({
@@ -9,7 +8,7 @@ export const generateMetadata = async ({
   params: Promise<{ app: string }>;
 }): Promise<Metadata> => {
   const { app: id } = await params;
-  const app = apps.find((app) => app.id === id);
+  const app = await getApp(id);
 
   return {
     title: `${app?.name} | László Tuss`,
@@ -21,61 +20,62 @@ export const generateMetadata = async ({
 
 const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   const { app: id } = await params;
-  const app = apps.find((app) => app.id === id);
+  const app = await getApp(id);
   if (!app) throw new Error("App not found");
+
   return (
-    <div className="px-4 max-w-4xl w-full mx-auto mt-12 mb-12">
-      <div
-        style={{ background: app.background }}
-        className={`group flex flex-col relative overflow-hidden  mb-12 mx-auto rounded-[48px] h-[420px] shrink-0`}
-      >
+    <div className="px-4 max-w-2xl w-full mx-auto mt-12 mb-24">
+      <div className="flex items-center gap-5">
         <img
-          src={app.banner}
+          src={app.icon}
           alt={app.name}
-          className="absolute bottom-0 h-[80%] translate-y-12 left-[50%] transform -translate-x-1/2 group-hover:translate-y-0 group-hover:scale-105 transition-all duration-500 ease-in-out"
+          className="w-28 h-28 rounded-[28px] shadow-md shrink-0"
         />
-        <div style={{ color: app.color }} className="absolute left-8 bottom-8">
-          <h3 className="text-3xl font-medium">{app.name}</h3>
-          <p className="opacity-80 pr-8 text-md font-medium mt-1 max-w-sm">
-            {app.description}
-          </p>
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {app.name}
+          </h1>
+          {app.genre && (
+            <p className="text-gray-500 dark:text-gray-400 mt-0.5">
+              {app.genre}
+            </p>
+          )}
+          {app.storeUrl && (
+            <a
+              className="mt-3 inline-flex items-center gap-2 text-indigo-500 font-bold hover:underline underline-offset-2"
+              href={app.storeUrl}
+              target="_blank"
+            >
+              <span>Open in the App Store</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          )}
         </div>
       </div>
-      <a
-        className="ml-8 mb-4 flex items-center gap-2 text-indigo-500 font-bold text-xl hover:underline underline-offset-2"
-        href={app.href}
-        target="_blank"
-      >
-        <span>Open in the AppStore</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-          <polyline points="15 3 21 3 21 9"></polyline>
-          <line x1="10" y1="14" x2="21" y2="3"></line>
-        </svg>
-      </a>
 
-      <pre className="px-8 font-sans leading-loose text-lg font-medium text-gray-600 dark:text-gray-300">
-        {app.content}
-      </pre>
-      {app.markdown && (
-        <div
-          className="mx-8 mt-8 border-t dark:border-gray-700 markdown"
-          dangerouslySetInnerHTML={{ __html: marked.parse(app.markdown) }}
-        />
+      {app.description && (
+        <p className="mt-8 whitespace-pre-line leading-loose text-lg font-medium text-gray-600 dark:text-gray-300">
+          {app.description}
+        </p>
       )}
+
       <div className="mt-8 pt-8 border-t dark:border-gray-700">
         <Link
-          className="ml-8 mb-4 flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
+          className="flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
           href={`/${app.id}/privacy-policy`}
         >
           <span>Privacy Policy</span>
