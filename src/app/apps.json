@@ -17,13 +17,13 @@
 
   {
     "appid": "1501510961",
-    "year": 2017,
     "role": "contract",
     "icon": "/icons/1501510961.png",
     "forceLocalScreenshots": true
   },
   {
     "appid": "662002418",
+    "releaseDate": "2018-01-15",
     "role": "contract",
     "icon": "/icons/662002418.png",
     "forceLocalScreenshots": true

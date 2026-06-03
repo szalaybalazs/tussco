@@ -66,18 +66,10 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   const app = await getApp(id);
   if (!app) throw new Error("App not found");
 
-  // Show the full release date, unless the timeline year was overridden to
-  // something else (e.g. the year I shipped my version) — then just show that.
-  const released = app.releaseDate
-    ? new Date(app.releaseDate).getFullYear() === app.year
-      ? formatDate(app.releaseDate)
-      : String(app.year)
-    : undefined;
-
   const infoRows: [string, string | undefined][] = [
     ["Developer", app.developer],
     ["Category", app.genre],
-    ["Released", released],
+    ["Released", app.releaseDate ? formatDate(app.releaseDate) : undefined],
     ["Version", app.version],
     ["Size", app.size],
     [

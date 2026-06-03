@@ -29,10 +29,9 @@ export interface iRawApp {
   name?: string;
   icon?: string;
   description?: string;
+  /** Overrides the App Store's release date — use it to place an app by the
+   *  year I actually shipped my version, not the listing's original date. */
   releaseDate?: string;
-  /** Override the timeline year (e.g. the year I shipped my version), when it
-   *  differs from the App Store's original release date. */
-  year?: number;
   genre?: string;
   role?: iAppRole;
   rating?: number;
@@ -124,7 +123,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
         "",
       description: raw.description || itunes.description || "",
       releaseDate,
-      year: raw.year ?? yearOf(releaseDate),
+      year: yearOf(releaseDate),
       role: raw.role ?? "indie",
       genre: raw.genre || itunes.primaryGenreName,
       developer: itunes.artistName,
@@ -153,7 +152,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     icon: raw.icon,
     description: raw.description || "",
     releaseDate: raw.releaseDate,
-    year: raw.year ?? yearOf(raw.releaseDate),
+    year: yearOf(raw.releaseDate),
     role: raw.role ?? "indie",
     genre: raw.genre,
     rating: raw.rating,
