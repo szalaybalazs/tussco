@@ -34,6 +34,7 @@ export interface iRawApp {
   role?: iAppRole;
   rating?: number;
   ratingCount?: number;
+  minimumOsVersion?: string;
   background?: string;
   color?: string;
   href?: string;
@@ -148,7 +149,9 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     genre: raw.genre,
     rating: raw.rating,
     ratingCount: raw.ratingCount,
-    screenshots: discoverScreenshots([id]),
+    minimumOsVersion: raw.minimumOsVersion,
+    // A delisted app can still have an appid (e.g. screenshots filed under it).
+    screenshots: discoverScreenshots([raw.appid, id]),
     storeUrl: raw.href,
     background: raw.background,
     color: raw.color,

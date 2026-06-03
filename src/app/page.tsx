@@ -14,7 +14,7 @@ export default async function Home() {
       <div className="flex flex-col items-center mb-20 text-center px-4">
         <img
           className="bg-gray-700 w-36 rounded-[32px] mt-24"
-          src="/profile.png"
+          src="/profile.jpg"
           alt="László Tuss"
         />
         <h2 className="text-4xl font-bold mt-12 text-indigo-500">

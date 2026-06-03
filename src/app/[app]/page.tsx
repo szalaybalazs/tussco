@@ -74,7 +74,13 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
     ["Size", app.size],
     [
       "Compatibility",
-      app.minimumOsVersion ? `iOS ${app.minimumOsVersion} or later` : undefined,
+      app.minimumOsVersion
+        ? `${
+            /[a-z]/i.test(app.minimumOsVersion)
+              ? app.minimumOsVersion
+              : `iOS ${app.minimumOsVersion}`
+          } or later`
+        : undefined,
     ],
   ];
   const rows = infoRows.filter(([, value]) => Boolean(value));

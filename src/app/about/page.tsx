@@ -17,7 +17,7 @@ const page: FunctionComponent<ipageProps> = () => {
         similique illum nobis eveniet. Voluptatibus, praesentium ea.
       </p>
       <img
-        src="/profile.png"
+        src="/profile.jpg"
         alt="Laszlo tuss"
         className="w-full mt-8 max-w-lg mx-auto mb-24"
       />
