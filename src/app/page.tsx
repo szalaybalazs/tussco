@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getApps, groupByYear } from "./app";
+import { RoleStamp } from "./RoleStamp";
 
 export default async function Home() {
   const apps = await getApps();
@@ -75,6 +76,7 @@ export default async function Home() {
                         </p>
                       )}
                     </div>
+                    <RoleStamp role={app.role} />
                     <svg
                       className="shrink-0 text-gray-300 dark:text-gray-600 group-hover:text-indigo-500 transition-colors"
                       xmlns="http://www.w3.org/2000/svg"

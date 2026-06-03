@@ -1,6 +1,7 @@
 import { getApp } from "../app";
 import { Metadata } from "next";
 import Link from "next/link";
+import { RoleStamp } from "../RoleStamp";
 
 export const generateMetadata = async ({
   params,
@@ -88,9 +89,12 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
           className="w-28 h-28 sm:w-32 sm:h-32 rounded-[28px] shadow-md shrink-0"
         />
         <div className="flex-1 min-w-0">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
-            {app.name}
-          </h1>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+              {app.name}
+            </h1>
+            <RoleStamp role={app.role} />
+          </div>
           {(app.genre || app.developer) && (
             <p className="mt-1 text-gray-500 dark:text-gray-400 font-medium">
               {[app.genre, app.developer].filter(Boolean).join(" · ")}
