@@ -30,11 +30,17 @@ export interface iRawApp {
   icon?: string;
   description?: string;
   releaseDate?: string;
+  /** Override the timeline year (e.g. the year I shipped my version), when it
+   *  differs from the App Store's original release date. */
+  year?: number;
   genre?: string;
   role?: iAppRole;
   rating?: number;
   ratingCount?: number;
   minimumOsVersion?: string;
+  /** Ignore App Store screenshots and use only the local ones — e.g. when a
+   *  later version I didn't build changed how the app looks. */
+  forceLocalScreenshots?: boolean;
   background?: string;
   color?: string;
   href?: string;
@@ -94,12 +100,15 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       ...(itunes.ipadScreenshotUrls ?? []),
     ];
     const id = raw.id || raw.appid;
-    // Prefer live App Store screenshots. Fall back to local ones discovered in
-    // public/screens/<appid|id>/ when the API exposes none — newer apps it
-    // doesn't return, or apps that were later delisted.
-    const screenshots = itunesShots.length
+    // Prefer live App Store screenshots, falling back to local ones in
+    // public/screens/<appid|id>/ when the API exposes none. With
+    // forceLocalScreenshots, use only the local ones (ignore the App Store).
+    const localShots = discoverScreenshots([raw.appid, id]);
+    const screenshots = raw.forceLocalScreenshots
+      ? localShots
+      : itunesShots.length
       ? itunesShots
-      : discoverScreenshots([raw.appid, id]);
+      : localShots;
     const releaseDate = raw.releaseDate || itunes.releaseDate || "";
     if (!releaseDate) return null;
 
@@ -115,7 +124,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
         "",
       description: raw.description || itunes.description || "",
       releaseDate,
-      year: yearOf(releaseDate),
+      year: raw.year ?? yearOf(releaseDate),
       role: raw.role ?? "indie",
       genre: raw.genre || itunes.primaryGenreName,
       developer: itunes.artistName,
@@ -144,7 +153,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     icon: raw.icon,
     description: raw.description || "",
     releaseDate: raw.releaseDate,
-    year: yearOf(raw.releaseDate),
+    year: raw.year ?? yearOf(raw.releaseDate),
     role: raw.role ?? "indie",
     genre: raw.genre,
     rating: raw.rating,

@@ -16,10 +16,24 @@
   { "appid": "1098204863", "role": "contract" },
 
   {
+    "appid": "1501510961",
+    "year": 2017,
+    "role": "contract",
+    "icon": "/icons/1501510961.png",
+    "forceLocalScreenshots": true
+  },
+  {
+    "appid": "662002418",
+    "role": "contract",
+    "icon": "/icons/662002418.png",
+    "forceLocalScreenshots": true
+  },
+
+  {
     "id": "beam-furniture-configurator",
     "appid": "1297296582",
     "name": "beam — furniture configurator",
-    "icon": "/legacy/beam.png",
+    "icon": "/icons/beam.png",
     "releaseDate": "2020-05-26",
     "role": "contract",
     "genre": "Business",
@@ -29,7 +43,7 @@
   {
     "id": "launch-real-estate",
     "name": "Launch Real Estate",
-    "icon": "/legacy/launch.png",
+    "icon": "/icons/launch.png",
     "releaseDate": "2017-03-01",
     "role": "contract",
     "genre": "Real Estate",
@@ -38,7 +52,7 @@
   {
     "id": "hue-power",
     "name": "Hue Power",
-    "icon": "/legacy/hue.png",
+    "icon": "/icons/hue.png",
     "releaseDate": "2016-09-01",
     "role": "co-owner",
     "genre": "Lifestyle",
@@ -49,7 +63,7 @@
   {
     "id": "pogochat",
     "name": "PoGoChat",
-    "icon": "/legacy/pogo.png",
+    "icon": "/icons/pogo.png",
     "releaseDate": "2016-07-01",
     "role": "indie",
     "genre": "Social Networking",
@@ -58,7 +72,7 @@
   {
     "id": "mighthub",
     "name": "Mighthub",
-    "icon": "/legacy/mighthub.png",
+    "icon": "/icons/mighthub.png",
     "releaseDate": "2016-05-01",
     "role": "contract",
     "genre": "Business",
@@ -67,7 +81,7 @@
   {
     "id": "project-hero",
     "name": "Project Hero",
-    "icon": "/legacy/hero.png",
+    "icon": "/icons/hero.png",
     "releaseDate": "2015-10-01",
     "role": "contract",
     "genre": "Business",
@@ -76,7 +90,7 @@
   {
     "id": "body-spa-salons",
     "name": "Body Spa Salons & Wellness",
-    "icon": "/legacy/bodyspa.png",
+    "icon": "/icons/bodyspa.png",
     "releaseDate": "2015-06-01",
     "role": "contract",
     "genre": "Lifestyle",
@@ -85,7 +99,7 @@
   {
     "id": "tappointment",
     "name": "Tappointment",
-    "icon": "/legacy/tappointment.png",
+    "icon": "/icons/tappointment.png",
     "releaseDate": "2015-03-01",
     "role": "co-owner",
     "genre": "Productivity",
@@ -96,7 +110,7 @@
   {
     "id": "e-naplo",
     "name": "e-Napló",
-    "icon": "/legacy/ellenorzo.png",
+    "icon": "/icons/ellenorzo.png",
     "releaseDate": "2014-08-01",
     "role": "contract",
     "genre": "Education",
@@ -105,7 +119,7 @@
   {
     "id": "calmarkr",
     "name": "Calmarkr",
-    "icon": "/legacy/calmarkr.png",
+    "icon": "/icons/calmarkr.png",
     "releaseDate": "2014-03-01",
     "role": "co-owner",
     "genre": "Business",
