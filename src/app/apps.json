@@ -30,6 +30,18 @@
   },
 
   {
+    "id": "emoji-stickers",
+    "appid": "1599885255",
+    "name": "Emoji Stickers for iMessage ㋡",
+    "icon": "/icons/1599885255.png",
+    "releaseDate": "2021-12-21",
+    "role": "indie",
+    "genre": "Stickers",
+    "rating": 4.36,
+    "ratingCount": 14,
+    "description": "Put big emojis in your iMessage chats. Emoji Stickers turns any emoji into an oversized sticker you can drop straight into a conversation."
+  },
+  {
     "id": "beam-furniture-configurator",
     "appid": "1297296582",
     "name": "beam — furniture configurator",
