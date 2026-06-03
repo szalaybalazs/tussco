@@ -2,14 +2,25 @@ import appList from "./apps.json";
 import { lookupApp, iTunesApp } from "./itunes";
 
 /**
+ * How an app relates to me — shown as a stamp on the card and detail page.
+ * - "indie": my own app, published under my account
+ * - "co-owner": built as co-owner of a company/startup (e.g. Tappointment)
+ * - "contract": client work or a contribution to someone else's app
+ */
+export type iAppRole = "indie" | "co-owner" | "contract";
+
+/**
  * A raw entry in apps.json.
  *
  * - If `appid` is a non-empty string, the app's data (name, icon, description,
- *   screenshots, release date, …) is fetched from the public iTunes API. Any
+ *   screenshots, release date, …) is fetched from the public iTunes API. This
+ *   works even when the app is published under someone else's account. Any
  *   field set here overrides the fetched value.
  * - If `appid` is empty/omitted, the app is treated as a local fallback (e.g.
- *   not on the App Store) and rendered entirely from this JSON. In that case
- *   `name`, `icon` and `releaseDate` are required.
+ *   delisted from the App Store) and rendered entirely from this JSON. In that
+ *   case `name`, `icon` and `releaseDate` are required.
+ *
+ * `role` defaults to "indie" when omitted.
  */
 export interface iRawApp {
   appid?: string;
@@ -19,6 +30,7 @@ export interface iRawApp {
   description?: string;
   releaseDate?: string;
   genre?: string;
+  role?: iAppRole;
   background?: string;
   color?: string;
   href?: string;
@@ -34,6 +46,7 @@ export interface iApp {
   description: string;
   releaseDate: string;
   year: number;
+  role: iAppRole;
   genre?: string;
   developer?: string;
   rating?: number;
@@ -95,6 +108,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       description: raw.description || itunes.description || "",
       releaseDate,
       year: yearOf(releaseDate),
+      role: raw.role ?? "indie",
       genre: raw.genre || itunes.primaryGenreName,
       developer: itunes.artistName,
       rating: itunes.averageUserRating,
@@ -122,6 +136,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     description: raw.description || "",
     releaseDate: raw.releaseDate,
     year: yearOf(raw.releaseDate),
+    role: raw.role ?? "indie",
     genre: raw.genre,
     screenshots: raw.screenshots ?? [],
     storeUrl: raw.href,
