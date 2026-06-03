@@ -16,6 +16,17 @@
   { "appid": "1098204863", "role": "contract" },
 
   {
+    "id": "beam-furniture-configurator",
+    "appid": "1297296582",
+    "name": "beam — furniture configurator",
+    "icon": "/legacy/beam.webp",
+    "releaseDate": "2020-05-26",
+    "role": "contract",
+    "genre": "Business",
+    "minimumOsVersion": "iPadOS 13.0",
+    "description": "In high-end furniture, customization is essential to getting the result right. beam is a product configurator built for luxury furnishings — instantly visualize any product and material combination, from individual pieces to full compositions, for rapid iteration and informed decisions.\n\nExplore current design directions with filters by brand or product type, and save favorite configurations to a collection for later reference."
+  },
+  {
     "id": "launch-real-estate",
     "name": "Launch Real Estate",
     "icon": "/legacy/launch.png",

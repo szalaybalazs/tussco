@@ -5,7 +5,9 @@ import { RoleStamp } from "./RoleStamp";
 export default async function Home() {
   const apps = await getApps();
   const groups = groupByYear(apps);
-  const latestId = apps[0]?.id;
+  // "Latest" marks the most recent app that's still on the App Store, so a
+  // newer-but-delisted app at the top of the timeline doesn't claim the badge.
+  const latestId = apps.find((app) => app.storeUrl)?.id;
 
   return (
     <>
