@@ -148,6 +148,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
   const id = raw.id || slugify(raw.name);
   return {
     id,
+    appid: raw.appid,
     name: raw.name,
     icon: raw.icon,
     description: raw.description || "",

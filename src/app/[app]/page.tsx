@@ -179,16 +179,18 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
         </section>
       )}
 
-      {/* Privacy */}
-      <div className="mt-10 pt-8 border-t dark:border-gray-700">
-        <Link
-          className="flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
-          href={`/${app.id}/privacy-policy`}
-        >
-          <span>Privacy Policy</span>
-          <ArrowOut size={16} />
-        </Link>
-      </div>
+      {/* Privacy — only for my own (indie) App Store apps */}
+      {app.role === "indie" && app.appid && (
+        <div className="mt-10 pt-8 border-t dark:border-gray-700">
+          <Link
+            className="flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
+            href={`/${app.id}/privacy-policy`}
+          >
+            <span>Privacy Policy</span>
+            <ArrowOut size={16} />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
