@@ -31,6 +31,8 @@ export interface iRawApp {
   releaseDate?: string;
   genre?: string;
   role?: iAppRole;
+  rating?: number;
+  ratingCount?: number;
   background?: string;
   color?: string;
   href?: string;
@@ -138,6 +140,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     year: yearOf(raw.releaseDate),
     role: raw.role ?? "indie",
     genre: raw.genre,
+    rating: raw.rating,
+    ratingCount: raw.ratingCount,
     screenshots: raw.screenshots ?? [],
     storeUrl: raw.href,
     background: raw.background,
