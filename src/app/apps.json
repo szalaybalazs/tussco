@@ -53,6 +53,17 @@
     "description": "In high-end furniture, customization is essential to getting the result right. beam is a product configurator built for luxury furnishings — instantly visualize any product and material combination, from individual pieces to full compositions, for rapid iteration and informed decisions.\n\nExplore current design directions with filters by brand or product type, and save favorite configurations to a collection for later reference."
   },
   {
+    "id": "beam-wittmann-special",
+    "appid": "1534169489",
+    "name": "beam — Wittmann special",
+    "icon": "/icons/1534169489.png",
+    "releaseDate": "2020-10-24",
+    "role": "contract",
+    "genre": "Business",
+    "minimumOsVersion": "iPadOS 13.0",
+    "description": "A bespoke edition of the beam configurator built for Wittmann, the Austrian luxury furniture house. Browse the Wittmann collection and visualize each piece in any fabric and material combination, then save your favorite configurations for later."
+  },
+  {
     "id": "launch-real-estate",
     "name": "Launch Real Estate",
     "icon": "/icons/launch.png",
