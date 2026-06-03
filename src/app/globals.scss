@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 body {
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
