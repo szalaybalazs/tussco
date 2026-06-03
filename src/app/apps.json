@@ -1,32 +1,7 @@
 [
-  {
-    "appid": "6470717066",
-    "screenshots": [
-      "/screens/6470717066/iPhone_1.png",
-      "/screens/6470717066/iPhone_2.png",
-      "/screens/6470717066/iPhone_3.png",
-      "/screens/6470717066/iPhone_4.png",
-      "/screens/6470717066/iPad_1.png",
-      "/screens/6470717066/iPad_2.png"
-    ]
-  },
-  {
-    "appid": "6745643890",
-    "screenshots": [
-      "/screens/6745643890/iPhone_1.png",
-      "/screens/6745643890/iPhone_2.png",
-      "/screens/6745643890/iPhone_3.png",
-      "/screens/6745643890/iPhone_4.png"
-    ]
-  },
-  {
-    "appid": "6451499657",
-    "screenshots": [
-      "/screens/6451499657/iPhone_1.png",
-      "/screens/6451499657/iPhone_2.png",
-      "/screens/6451499657/iPhone_3.png"
-    ]
-  },
+  { "appid": "6470717066" },
+  { "appid": "6745643890" },
+  { "appid": "6451499657" },
   { "appid": "6471989101" },
   { "appid": "6450907393" },
   { "appid": "6443723021" },
@@ -58,13 +33,6 @@
     "genre": "Lifestyle",
     "rating": 3.53,
     "ratingCount": 86,
-    "screenshots": [
-      "/legacy/hue-1.png",
-      "/legacy/hue-2.png",
-      "/legacy/hue-3.png",
-      "/legacy/hue-4.png",
-      "/legacy/hue-5.png"
-    ],
     "description": "Use your phone as a remote for your Philips Hue lights — toggle them on and off, fine-tune brightness, switch colors and save your favorites. Built on a custom SDK for communicating with the Hue bridge.\n\nGreat lights control\n- Control Hue lights individually\n- Turn lights on/off and set brightness from the main screen\n- Use a master fader to fine-tune your active lights\n- Power-on Behavior: decide how your lights come back on\n\nManage your lights as groups\n- Group lights and control them with a single touch\n- Set a whole group to the same color and brightness\n\nSnapshots — capture a moment\n- Save the state of all active lights into a snapshot and recall it later\n- Use snapshots as scenes and share them via your Hue bridge\n\nMulti-bridge support\n- Use more than one Philips Hue bridge at the same time"
   },
   {
@@ -112,13 +80,6 @@
     "genre": "Productivity",
     "rating": 5.0,
     "ratingCount": 25,
-    "screenshots": [
-      "/legacy/tappointment-1.png",
-      "/legacy/tappointment-2.png",
-      "/legacy/tappointment-3.png",
-      "/legacy/tappointment-4.png",
-      "/legacy/tappointment-5.png"
-    ],
     "description": "Your 24/7 receptionist. Couldn't reach your hairdresser, cosmetician or trainer over the phone because they were busy or on holiday? Instead of calling, use Tappointment to book an appointment anytime, anywhere — modifying or cancelling takes just a few taps.\n\nSync Tappointment with your other calendars and see all your appointments alongside your provider's free slots on one page. Browse providers and services to find the one that suits you best.\n\nFor providers: manage your business inside the app — publish your schedule, stay bookable 24/7, invite your customers, and let your calendar fill up automatically without making or taking phone calls."
   },
   {

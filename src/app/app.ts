@@ -1,5 +1,6 @@
 import appList from "./apps.json";
 import { lookupApp, iTunesApp } from "./itunes";
+import { discoverScreenshots } from "./screenshots";
 
 /**
  * How an app relates to me — shown as a stamp on the card and detail page.
@@ -36,7 +37,6 @@ export interface iRawApp {
   background?: string;
   color?: string;
   href?: string;
-  screenshots?: string[];
 }
 
 /** A fully-resolved app used everywhere in the UI. */
@@ -92,15 +92,18 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       ...(itunes.screenshotUrls ?? []),
       ...(itunes.ipadScreenshotUrls ?? []),
     ];
-    // Prefer live App Store screenshots. Fall back to local ones from apps.json
-    // when the API exposes none — newer apps it doesn't return, or apps that
-    // were later delisted.
-    const screenshots = itunesShots.length ? itunesShots : raw.screenshots ?? [];
+    const id = raw.id || raw.appid;
+    // Prefer live App Store screenshots. Fall back to local ones discovered in
+    // public/screens/<appid|id>/ when the API exposes none — newer apps it
+    // doesn't return, or apps that were later delisted.
+    const screenshots = itunesShots.length
+      ? itunesShots
+      : discoverScreenshots([raw.appid, id]);
     const releaseDate = raw.releaseDate || itunes.releaseDate || "";
     if (!releaseDate) return null;
 
     return {
-      id: raw.id || raw.appid,
+      id,
       appid: raw.appid,
       name: raw.name || itunes.trackName,
       icon:
@@ -133,8 +136,9 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
 
   // Local fallback: requires enough data to stand on its own.
   if (!raw.name || !raw.icon || !raw.releaseDate) return null;
+  const id = raw.id || slugify(raw.name);
   return {
-    id: raw.id || slugify(raw.name),
+    id,
     name: raw.name,
     icon: raw.icon,
     description: raw.description || "",
@@ -144,7 +148,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     genre: raw.genre,
     rating: raw.rating,
     ratingCount: raw.ratingCount,
-    screenshots: raw.screenshots ?? [],
+    screenshots: discoverScreenshots([id]),
     storeUrl: raw.href,
     background: raw.background,
     color: raw.color,
