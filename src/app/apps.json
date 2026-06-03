@@ -11,5 +11,89 @@
   { "appid": "1571539250" },
   { "appid": "1330408121" },
   { "appid": "1304374033" },
-  { "appid": "1218834662" }
+  { "appid": "1218834662" },
+
+  { "appid": "1098204863", "role": "contract" },
+
+  {
+    "id": "launch-real-estate",
+    "name": "Launch Real Estate",
+    "icon": "/legacy/launch.png",
+    "releaseDate": "2017-03-01",
+    "role": "contract",
+    "genre": "Real Estate",
+    "description": "Launch Real Estate is home to the sharpest, most experienced, and preeminent Realtors® in Arizona real estate."
+  },
+  {
+    "id": "hue-power",
+    "name": "Hue Power",
+    "icon": "/legacy/hue.png",
+    "releaseDate": "2016-09-01",
+    "role": "co-owner",
+    "genre": "Utilities",
+    "description": "A reimagined remote for Philips Hue smart lights, built on a custom SDK for communication."
+  },
+  {
+    "id": "pogochat",
+    "name": "PoGoChat",
+    "icon": "/legacy/pogo.png",
+    "releaseDate": "2016-07-01",
+    "role": "indie",
+    "genre": "Social Networking",
+    "description": "Real-time chat for Pokémon Go players, with a live map of Pokémon locations and user-made points of interest."
+  },
+  {
+    "id": "mighthub",
+    "name": "Mighthub",
+    "icon": "/legacy/mighthub.png",
+    "releaseDate": "2016-05-01",
+    "role": "contract",
+    "genre": "Business",
+    "description": "A B2C marketplace connecting advertisers with specially talented providers. I built the iOS app — prepay system, phone validation and real-time chat."
+  },
+  {
+    "id": "project-hero",
+    "name": "Project Hero",
+    "icon": "/legacy/hero.png",
+    "releaseDate": "2015-10-01",
+    "role": "contract",
+    "genre": "Business",
+    "description": "Contributed to an internal corporate app from mid-development to MVP, mostly building the UI in code and integrating Core Data."
+  },
+  {
+    "id": "body-spa-salons",
+    "name": "Body Spa Salons & Wellness",
+    "icon": "/legacy/bodyspa.png",
+    "releaseDate": "2015-06-01",
+    "role": "contract",
+    "genre": "Lifestyle",
+    "description": "A whitelabel booking app powered by our Tappointment platform."
+  },
+  {
+    "id": "tappointment",
+    "name": "Tappointment",
+    "icon": "/legacy/tappointment.png",
+    "releaseDate": "2015-03-01",
+    "role": "co-owner",
+    "genre": "Business",
+    "description": "The flagship product of our startup — an advanced appointment system with multiple calendars, recurring events and a built-in contact list, rebuilt for iPad and larger iPhones."
+  },
+  {
+    "id": "e-naplo",
+    "name": "e-Napló",
+    "icon": "/legacy/ellenorzo.png",
+    "releaseDate": "2014-08-01",
+    "role": "contract",
+    "genre": "Education",
+    "description": "An app for Hungarian parents to follow their children's schoolwork, ported from the existing Android version in my free time."
+  },
+  {
+    "id": "calmarkr",
+    "name": "Calmarkr",
+    "icon": "/legacy/calmarkr.png",
+    "releaseDate": "2014-03-01",
+    "role": "co-owner",
+    "genre": "Business",
+    "description": "The predecessor to Tappointment — basic appointment booking for users and simple calendar management for providers."
+  }
 ]
