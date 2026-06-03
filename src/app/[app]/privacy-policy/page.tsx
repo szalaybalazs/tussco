@@ -1,18 +1,13 @@
 import { apps } from "@/app/app";
-import { FunctionComponent } from "react";
 import { Metadata } from "next";
 import PrivacyPolicy from "@/app/privacy-policy/PrivacyPolicy";
 
-interface iindexProps {
-  params: { app: string };
-}
-
-export const generateMetadata = ({
+export const generateMetadata = async ({
   params,
 }: {
-  params: { app: string };
-}): Metadata => {
-  const id = params.app;
+  params: Promise<{ app: string }>;
+}): Promise<Metadata> => {
+  const { app: id } = await params;
   const app = apps.find((app) => app.id === id);
 
   return {
@@ -23,7 +18,8 @@ export const generateMetadata = ({
   };
 };
 
-const index: FunctionComponent<iindexProps> = ({ params: { app: id } }) => {
+const index = async ({ params }: { params: Promise<{ app: string }> }) => {
+  const { app: id } = await params;
   const app = apps.find((app) => app.id === id);
   return <PrivacyPolicy app={app?.name} />;
 };

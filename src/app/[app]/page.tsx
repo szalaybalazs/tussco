@@ -1,15 +1,14 @@
-import { FunctionComponent } from "react";
 import { apps } from "../app";
 import { Metadata } from "next";
 import { marked } from "marked";
 import Link from "next/link";
 
-export const generateMetadata = ({
+export const generateMetadata = async ({
   params,
 }: {
-  params: { app: string };
-}): Metadata => {
-  const id = params.app;
+  params: Promise<{ app: string }>;
+}): Promise<Metadata> => {
+  const { app: id } = await params;
   const app = apps.find((app) => app.id === id);
 
   return {
@@ -20,11 +19,8 @@ export const generateMetadata = ({
   };
 };
 
-interface ipageProps {
-  params: { app: string };
-}
-
-const page: FunctionComponent<ipageProps> = ({ params: { app: id } }) => {
+const page = async ({ params }: { params: Promise<{ app: string }> }) => {
+  const { app: id } = await params;
   const app = apps.find((app) => app.id === id);
   if (!app) throw new Error("App not found");
   return (
