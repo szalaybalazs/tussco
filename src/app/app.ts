@@ -88,12 +88,14 @@ const yearOf = (date: string) => new Date(date).getFullYear();
 /** Merge a raw JSON entry with optional iTunes data into a resolved app. */
 const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
   if (raw.appid && itunes) {
-    const screenshots =
-      raw.screenshots ??
-      [
-        ...(itunes.screenshotUrls ?? []),
-        ...(itunes.ipadScreenshotUrls ?? []),
-      ];
+    const itunesShots = [
+      ...(itunes.screenshotUrls ?? []),
+      ...(itunes.ipadScreenshotUrls ?? []),
+    ];
+    // Prefer live App Store screenshots. Fall back to local ones from apps.json
+    // when the API exposes none — newer apps it doesn't return, or apps that
+    // were later delisted.
+    const screenshots = itunesShots.length ? itunesShots : raw.screenshots ?? [];
     const releaseDate = raw.releaseDate || itunes.releaseDate || "";
     if (!releaseDate) return null;
 

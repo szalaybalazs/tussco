@@ -1,7 +1,32 @@
 [
-  { "appid": "6470717066" },
-  { "appid": "6745643890" },
-  { "appid": "6451499657" },
+  {
+    "appid": "6470717066",
+    "screenshots": [
+      "/screens/6470717066/iPhone_1.png",
+      "/screens/6470717066/iPhone_2.png",
+      "/screens/6470717066/iPhone_3.png",
+      "/screens/6470717066/iPhone_4.png",
+      "/screens/6470717066/iPad_1.png",
+      "/screens/6470717066/iPad_2.png"
+    ]
+  },
+  {
+    "appid": "6745643890",
+    "screenshots": [
+      "/screens/6745643890/iPhone_1.png",
+      "/screens/6745643890/iPhone_2.png",
+      "/screens/6745643890/iPhone_3.png",
+      "/screens/6745643890/iPhone_4.png"
+    ]
+  },
+  {
+    "appid": "6451499657",
+    "screenshots": [
+      "/screens/6451499657/iPhone_1.png",
+      "/screens/6451499657/iPhone_2.png",
+      "/screens/6451499657/iPhone_3.png"
+    ]
+  },
   { "appid": "6471989101" },
   { "appid": "6450907393" },
   { "appid": "6443723021" },
