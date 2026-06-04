@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { socials, appStore } from "./socials";
 
 const iconClasses =
@@ -12,6 +13,12 @@ const Footer = () => {
           <p className="text-md font-medium text-gray-500 dark:text-gray-400">
             Budapest, Hungary
           </p>
+          <Link
+            href="/about"
+            className="mt-2 inline-block text-sm font-semibold text-indigo-500 hover:underline underline-offset-2"
+          >
+            About
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           {[...socials, appStore].map((social) => (
