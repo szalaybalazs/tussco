@@ -2,7 +2,6 @@ import { getApp } from "../app";
 import { Metadata } from "next";
 import Link from "next/link";
 import { RoleStamp } from "../RoleStamp";
-import { BackLink } from "./BackLink";
 
 export const generateMetadata = async ({
   params,
@@ -88,8 +87,6 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
 
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-24">
-      <BackLink />
-
       {/* Hero */}
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <img
