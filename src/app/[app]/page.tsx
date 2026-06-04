@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { RoleStamp } from "../RoleStamp";
 import { Screenshots } from "./Screenshots";
+import { HashScroll } from "./HashScroll";
 import { fetchLinkPreview } from "../linkPreview";
 import { notFound } from "next/navigation";
 
@@ -100,6 +101,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
 
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-12">
+      <HashScroll />
       {/* Hero */}
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <img
@@ -201,7 +203,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
 
       {/* Support — Apple's iMessage-apps guide, for my sticker apps */}
       {isSticker && (
-        <section className="mt-12">
+        <section id="support" className="mt-12 scroll-mt-24">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3">
             Support
           </h2>
