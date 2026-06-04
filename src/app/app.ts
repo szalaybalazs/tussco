@@ -115,6 +115,11 @@ const appStoreUrl = (appid: string, tracked: boolean) =>
     ? `https://apps.apple.com/app/apple-store/id${appid}?pt=${APPLE_PT}&ct=${APPLE_CT}&mt=8`
     : `https://apps.apple.com/app/id${appid}`;
 
+// Ensure a user-entered URL is absolute, so an href like "teleprompter.com"
+// doesn't resolve as a same-site path.
+const withProtocol = (url?: string) =>
+  url && !/^https?:\/\//i.test(url) ? `https://${url}` : url;
+
 /** Merge a raw JSON entry with optional iTunes data into a resolved app. */
 const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
   if (raw.appid && itunes) {
@@ -167,11 +172,11 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       screenshotBanner,
       // My own apps get tracked App Store links; others use the plain listing.
       storeUrl:
-        raw.href ||
+        withProtocol(raw.href) ||
         (role === "indie"
           ? appStoreUrl(raw.appid, true)
           : itunes.trackViewUrl || appStoreUrl(raw.appid, false)),
-      website: raw.website,
+      website: withProtocol(raw.website),
       sticker: raw.sticker,
       price: itunes.formattedPrice,
       background: raw.background,
@@ -200,8 +205,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     minimumOsVersion: raw.minimumOsVersion,
     screenshotGroups: local.groups,
     screenshotBanner: local.banner,
-    storeUrl: raw.href,
-    website: raw.website,
+    storeUrl: withProtocol(raw.href),
+    website: withProtocol(raw.website),
     sticker: raw.sticker,
     background: raw.background,
     color: raw.color,
