@@ -17,26 +17,36 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  // SSR-safe defaults; refined on the client per route.
+  const [canGoBack, setCanGoBack] = useState(true);
+  const [hasSupport, setHasSupport] = useState(false);
 
-  // Home offers the About link; every other page (about, app, privacy) a Back button.
+  // Home offers the About link; every other page a Back (or Home) button.
   const showBack = pathname !== "/";
 
-  // Close the mobile menu whenever the route changes.
-  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    setMenuOpen(false);
+    // No in-site history (opened directly from outside) → offer Home, not Back.
+    setCanGoBack(window.history.length > 1);
+    // Show a support shortcut when the current page has a support section.
+    const raf = requestAnimationFrame(() =>
+      setHasSupport(!!document.getElementById("support"))
+    );
+    return () => cancelAnimationFrame(raf);
+  }, [pathname]);
 
   return (
     <header className="flex flex-shrink-0 backdrop-blur-lg bg-white/75 dark:bg-gray-800/75 z-50 sticky top-0">
       <div className="flex flex-shrink-0 px-5 sm:px-8 items-center max-w-4xl mx-auto w-full border-b border-gray-300 dark:border-gray-600 h-[80px]">
-        <div className="flex-1">
-          {showBack ? (
+        <div className="flex-1 flex items-center gap-2">
+          {!showBack ? (
+            <Link href="/about" className={pillClasses}>
+              About
+            </Link>
+          ) : canGoBack ? (
             <button
               type="button"
-              onClick={() => {
-                // Go back through history so the timeline scroll is restored;
-                // fall back to the home page when there's nowhere to go back to.
-                if (window.history.length > 1) router.back();
-                else router.push("/");
-              }}
+              onClick={() => router.back()}
               className={pillClasses}
             >
               <svg
@@ -56,9 +66,46 @@ const Header = () => {
               <span>Back</span>
             </button>
           ) : (
-            <Link href="/about" className={pillClasses}>
-              About
-            </Link>
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className={pillClasses}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <path d="M9 22V12h6v10" />
+              </svg>
+              <span>Home</span>
+            </button>
+          )}
+          {showBack && hasSupport && (
+            <a href="#support" aria-label="Support" className={iconClasses}>
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+            </a>
           )}
         </div>
         <Link href="/">
