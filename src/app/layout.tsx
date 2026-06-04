@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Footer from "./Footer";
 import Header from "./Header";
+import { FaviconRefresh } from "./FaviconRefresh";
 import "./globals.scss";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inter.className, "dark:bg-gray-800")}>
+        <FaviconRefresh />
         <Header />
         {children}
         <Footer />
