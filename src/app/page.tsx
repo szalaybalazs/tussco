@@ -79,11 +79,19 @@ export default async function Home() {
                           </div>
                         )}
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-baseline gap-1">
                         {(app.genre || app.company) && (
-                          <span className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate min-w-0">
-                            {[app.genre, app.company].filter(Boolean).join(" · ")}
-                          </span>
+                          <>
+                            <span className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate min-w-0">
+                              {[app.genre, app.company].filter(Boolean).join(" · ")}
+                            </span>
+                            <span
+                              className="shrink-0 text-sm font-medium text-gray-500 dark:text-gray-400"
+                              aria-hidden
+                            >
+                              ·
+                            </span>
+                          </>
                         )}
                         <RoleStamp role={app.role} />
                       </div>
