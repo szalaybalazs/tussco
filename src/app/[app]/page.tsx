@@ -87,7 +87,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   const rows = infoRows.filter(([, value]) => Boolean(value));
 
   return (
-    <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-24">
+    <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-12">
       {/* Hero */}
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <img
@@ -175,19 +175,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
 
       {/* Legal — only for my own (indie) App Store apps */}
       {app.role === "indie" && app.appid && (
-        <div className="mt-12 pt-8 border-t dark:border-gray-700 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-          <span>
-            © 2026{" "}
-            <a
-              href="https://catnip.media"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-indigo-500 hover:underline underline-offset-2"
-            >
-              Catnip Media
-            </a>
-          </span>
-          <span aria-hidden>·</span>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-medium text-gray-500 dark:text-gray-400">
           <Link
             href={`/${app.id}/privacy-policy`}
             className="text-indigo-500 hover:underline underline-offset-2"
