@@ -95,17 +95,18 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
           className="w-28 h-28 sm:w-32 sm:h-32 rounded-[28px] shadow-md shrink-0"
         />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
-              {app.name}
-            </h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+            {app.name}
+          </h1>
+          <div className="mt-1 flex items-baseline gap-1.5 flex-wrap text-gray-500 dark:text-gray-400 font-medium">
+            {(app.genre || app.company) && (
+              <>
+                <span>{[app.genre, app.company].filter(Boolean).join(" · ")}</span>
+                <span aria-hidden>·</span>
+              </>
+            )}
             <RoleStamp role={app.role} />
           </div>
-          {(app.genre || app.company) && (
-            <p className="mt-1 text-gray-500 dark:text-gray-400 font-medium">
-              {[app.genre, app.company].filter(Boolean).join(" · ")}
-            </p>
-          )}
           {typeof app.rating === "number" && app.rating > 0 && (
             <div className="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
               <Stars rating={app.rating} />
