@@ -31,7 +31,7 @@ export default async function Home() {
           {/* Timeline rail */}
           <span
             aria-hidden
-            className="absolute left-2 top-3 bottom-3 w-px bg-gray-200 dark:bg-gray-700"
+            className="absolute left-8 top-3 bottom-3 w-px -translate-x-1/2 bg-gray-200 dark:bg-gray-700"
           />
 
           {groups.map((group) => (
@@ -40,20 +40,20 @@ export default async function Home() {
               <div className="relative flex items-center mb-4">
                 <span
                   aria-hidden
-                  className="absolute left-2 -translate-x-1/2 w-3 h-3 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-gray-800"
+                  className="absolute left-8 -translate-x-1/2 w-3 h-3 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-gray-800"
                 />
-                <h2 className="pl-10 text-2xl font-black text-indigo-600 dark:text-indigo-400">
+                <h2 className="pl-20 text-2xl font-black text-indigo-600 dark:text-indigo-400">
                   {group.year}
                 </h2>
               </div>
 
               {/* Apps released this year */}
-              <div className="pl-10 flex flex-col gap-1">
+              <div className="flex flex-col gap-1">
                 {group.apps.map((app) => (
                   <Link
                     key={app.id}
                     href={`/${app.id}`}
-                    className="group flex items-start gap-4 rounded-3xl p-3 -ml-3 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
+                    className="group relative flex items-start gap-4 rounded-3xl p-3 -ml-3 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
                   >
                     <img
                       src={app.icon}
