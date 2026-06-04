@@ -12,6 +12,9 @@ import { notFound } from "next/navigation";
 const STICKER_SUPPORT_URL = "https://support.apple.com/en-us/104969";
 const STICKER_SUPPORT_TITLE =
   "How to use iMessage apps on your iPhone and iPad";
+const SUBSCRIPTION_SUPPORT_URL = "https://support.apple.com/en-us/HT202039";
+const SUBSCRIPTION_SUPPORT_TITLE =
+  "View, change, or cancel your subscriptions";
 
 export const generateMetadata = async ({
   params,
@@ -96,21 +99,39 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   ];
   const rows = infoRows.filter(([, value]) => Boolean(value));
 
-  // A support.apple.com link in the description becomes the app's own support
-  // link; otherwise sticker apps point at Apple's iMessage-apps guide.
+  // Support cards — sticker first, then subscription, then any support.apple
+  // link found in the description (deduped by URL).
   const isSticker = !!app.sticker || /sticker/i.test(app.genre || "");
   const descSupport = app.description
     .match(/(?:https?:\/\/)?support\.apple\.com\/\S+/i)?.[0]
     ?.replace(/[.,;)]+$/, "");
-  const supportUrl = descSupport
+  const descSupportUrl = descSupport
     ? descSupport.startsWith("http")
       ? descSupport
       : `https://${descSupport}`
-    : isSticker
-    ? STICKER_SUPPORT_URL
     : undefined;
-  const supportFallbackTitle = descSupport ? "Support" : STICKER_SUPPORT_TITLE;
-  const support = supportUrl ? await fetchLinkPreview(supportUrl) : null;
+
+  const supportLinks: { url: string; fallbackTitle: string }[] = [];
+  if (isSticker)
+    supportLinks.push({
+      url: STICKER_SUPPORT_URL,
+      fallbackTitle: STICKER_SUPPORT_TITLE,
+    });
+  if (app.subscription)
+    supportLinks.push({
+      url: SUBSCRIPTION_SUPPORT_URL,
+      fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE,
+    });
+  if (descSupportUrl)
+    supportLinks.push({ url: descSupportUrl, fallbackTitle: "Support" });
+
+  const seen = new Set<string>();
+  const supportCards = supportLinks.filter(
+    (l) => !seen.has(l.url) && seen.add(l.url)
+  );
+  const supportPreviews = await Promise.all(
+    supportCards.map((l) => fetchLinkPreview(l.url))
+  );
 
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-12">
@@ -214,54 +235,62 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
         </section>
       )}
 
-      {/* Support — the app's own support page, or Apple's iMessage guide */}
-      {supportUrl && (
+      {/* Support — sticker / subscription / description support links */}
+      {supportCards.length > 0 && (
         <section id="support" className="mt-12 scroll-mt-24">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3">
             Support
           </h2>
-          <a
-            href={supportUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-4 rounded-3xl border border-gray-200 dark:border-gray-700 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
-          >
-            {support?.image ? (
-              <img
-                src={support.image}
-                alt=""
-                className="w-16 h-16 rounded-2xl object-cover shrink-0"
-              />
-            ) : (
-              <span className="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0 text-indigo-500">
-                <svg
-                  className="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
+          <div className="flex flex-col gap-3">
+            {supportCards.map((card, i) => {
+              const preview = supportPreviews[i];
+              return (
+                <a
+                  key={card.url}
+                  href={card.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 rounded-3xl border border-gray-200 dark:border-gray-700 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                  <line x1="12" y1="17" x2="12.01" y2="17" />
-                </svg>
-              </span>
-            )}
-            <span className="min-w-0 flex-1">
-              <span className="block font-semibold text-gray-800 dark:text-gray-200">
-                {support?.title || supportFallbackTitle}
-              </span>
-              <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-                {support?.description || "support.apple.com"}
-              </span>
-            </span>
-            <span className="shrink-0 self-center text-gray-400 dark:text-gray-500 group-hover:text-indigo-500 transition-colors">
-              <ArrowOut size={18} />
-            </span>
-          </a>
+                  {preview?.image ? (
+                    <img
+                      src={preview.image}
+                      alt=""
+                      className="w-16 h-16 rounded-2xl object-cover shrink-0"
+                    />
+                  ) : (
+                    <span className="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0 text-indigo-500">
+                      <svg
+                        className="w-6 h-6"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                      </svg>
+                    </span>
+                  )}
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold text-gray-800 dark:text-gray-200">
+                      {preview?.title || card.fallbackTitle}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                      {preview?.description || "support.apple.com"}
+                    </span>
+                  </span>
+                  <span className="shrink-0 self-center text-gray-400 dark:text-gray-500 group-hover:text-indigo-500 transition-colors">
+                    <ArrowOut size={18} />
+                  </span>
+                </a>
+              );
+            })}
+          </div>
         </section>
       )}
 

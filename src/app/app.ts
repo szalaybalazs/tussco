@@ -52,6 +52,8 @@ export interface iRawApp {
   /** Force-show the iMessage "Support" card even when the App Store genre
    *  isn't "Stickers" (e.g. an app that bundles a sticker pack). */
   sticker?: boolean;
+  /** Show a "Manage subscriptions" support card. */
+  subscription?: boolean;
 }
 
 /** A fully-resolved app used everywhere in the UI. */
@@ -79,6 +81,7 @@ export interface iApp {
   storeUrl?: string;
   website?: string;
   sticker?: boolean;
+  subscription?: boolean;
   price?: string;
   background?: string;
   color?: string;
@@ -178,6 +181,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
           : itunes.trackViewUrl || appStoreUrl(raw.appid, false)),
       website: withProtocol(raw.website),
       sticker: raw.sticker,
+      subscription: raw.subscription,
       price: itunes.formattedPrice,
       background: raw.background,
       color: raw.color,
@@ -208,6 +212,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     storeUrl: withProtocol(raw.href),
     website: withProtocol(raw.website),
     sticker: raw.sticker,
+    subscription: raw.subscription,
     background: raw.background,
     color: raw.color,
   };
