@@ -6,14 +6,15 @@ import type { iPlatform, iScreenshotGroup } from "../screenshots";
 const PLATFORM_LABEL: Record<iPlatform, string> = {
   iPhone: "iPhone",
   iPad: "iPad",
+  watchOS: "Apple Watch",
   macOS: "Mac",
   tvOS: "Apple TV",
 };
 
-// Phone shots get a fixed height (tall portrait cards). The wider platforms
-// (iPad / Mac / Apple TV) fit the viewport width but are capped at 500px tall
-// so a (often portrait) shot fits the screen — one per view.
-const isPhone = (p: iPlatform) => p === "iPhone";
+// iPhone / Apple Watch shots get a fixed height (tall portrait cards). The
+// wider platforms (iPad / Mac / Apple TV) fit the viewport width but are capped
+// at 500px tall so a (often portrait) shot fits the screen — one per view.
+const isTall = (p: iPlatform) => p === "iPhone" || p === "watchOS";
 
 const detectPlatform = (): iPlatform => {
   if (typeof navigator === "undefined") return "iPhone";
@@ -129,7 +130,7 @@ export const Screenshots = ({
               }`}
               onLoad={resetScroll}
               className={`object-contain rounded-2xl shadow-md shrink-0 snap-start ${
-                isPhone(group.platform)
+                isTall(group.platform)
                   ? "h-[440px] w-auto max-w-none"
                   : "w-auto h-auto max-w-[calc(100vw-2.5rem)] sm:max-w-[calc(100vw-4rem)] max-h-[500px]"
               }`}

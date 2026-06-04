@@ -6,8 +6,9 @@ import path from "path";
 // iPad_2.jpg). If a folder has no device screenshots, a single file named
 // image.<ext> is used as a fallback banner.
 const SCREENS_DIR = path.join(process.cwd(), "public", "screens");
-const DEVICE_ORDER = ["iPhone", "iPad", "macOS", "tvOS"] as const;
-const DEVICE_FILE = /^(iPhone|iPad|macOS|tvOS)_(\d+)\.(png|jpe?g|webp)$/i;
+const DEVICE_ORDER = ["iPhone", "iPad", "watchOS", "macOS", "tvOS"] as const;
+const DEVICE_FILE =
+  /^(iPhone|iPad|watchOS|macOS|tvOS)_(\d+)\.(png|jpe?g|webp)$/i;
 const IMAGE_FILE = /^image\.(png|jpe?g|webp)$/i;
 
 export type iPlatform = (typeof DEVICE_ORDER)[number];
