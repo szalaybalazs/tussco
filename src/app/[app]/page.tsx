@@ -117,15 +117,29 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
               </span>
             </div>
           )}
-          {app.storeUrl && (
-            <a
-              href={app.storeUrl}
-              target="_blank"
-              className="mt-4 inline-flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white font-semibold rounded-full px-5 py-2.5 transition-all"
-            >
-              <span>View on the App Store</span>
-              <ArrowOut />
-            </a>
+          {(app.storeUrl || app.website) && (
+            <div className="mt-4 flex flex-wrap gap-3">
+              {app.storeUrl && (
+                <a
+                  href={app.storeUrl}
+                  target="_blank"
+                  className="inline-flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white font-semibold rounded-full px-5 py-2.5 transition-all"
+                >
+                  <span>View on the App Store</span>
+                  <ArrowOut />
+                </a>
+              )}
+              {app.website && (
+                <a
+                  href={app.website}
+                  target="_blank"
+                  className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 active:scale-95 text-gray-800 dark:text-gray-100 font-semibold rounded-full px-5 py-2.5 transition-all"
+                >
+                  <span>Website</span>
+                  <ArrowOut />
+                </a>
+              )}
+            </div>
           )}
         </div>
       </div>

@@ -46,6 +46,9 @@ export interface iRawApp {
   background?: string;
   color?: string;
   href?: string;
+  /** Marketing/website URL — shows a "Website" button next to the App Store
+   *  one (handy for delisted apps that still have a live site). */
+  website?: string;
 }
 
 /** A fully-resolved app used everywhere in the UI. */
@@ -71,6 +74,7 @@ export interface iApp {
   /** Single fallback banner (image.*) shown when there are no device shots. */
   screenshotBanner?: string;
   storeUrl?: string;
+  website?: string;
   price?: string;
   background?: string;
   color?: string;
@@ -163,6 +167,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
         (role === "indie"
           ? appStoreUrl(raw.appid, true)
           : itunes.trackViewUrl || appStoreUrl(raw.appid, false)),
+      website: raw.website,
       price: itunes.formattedPrice,
       background: raw.background,
       color: raw.color,
@@ -191,6 +196,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     screenshotGroups: local.groups,
     screenshotBanner: local.banner,
     storeUrl: raw.href,
+    website: raw.website,
     background: raw.background,
     color: raw.color,
   };
