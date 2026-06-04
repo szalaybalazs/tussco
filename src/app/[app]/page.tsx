@@ -2,6 +2,7 @@ import { getApp } from "../app";
 import { Metadata } from "next";
 import Link from "next/link";
 import { RoleStamp } from "../RoleStamp";
+import { BackLink } from "./BackLink";
 
 export const generateMetadata = async ({
   params,
@@ -87,25 +88,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
 
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-24">
-      <Link
-        href="/"
-        className="inline-flex items-center gap-1.5 text-indigo-500 font-medium mb-6 hover:underline underline-offset-2"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-        <span>Back</span>
-      </Link>
+      <BackLink />
 
       {/* Hero */}
       <div className="flex flex-col sm:flex-row gap-6 items-start">
@@ -156,8 +139,6 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
             style={{ justifyContent: "safe center" }}
           >
             {app.screenshots.map((src, i) => {
-              // The local fallback banner (image.*) isn't a device shot — no
-              // rounded corners for it.
               const isBanner = /\/image\.[a-z0-9]+$/i.test(src);
               return (
                 <img
