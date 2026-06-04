@@ -13,21 +13,33 @@ const TOKEN_RE = new RegExp(
 
 const linkClass = "text-indigo-500 hover:underline underline-offset-2";
 
+// Strip protocol/www/trailing slash for comparing a token to the app name.
+const normDomain = (s: string) =>
+  s
+    .replace(/^https?:\/\//i, "")
+    .replace(/^www\./i, "")
+    .replace(/\/+$/, "")
+    .toLowerCase();
+
 /**
  * Render an app description with every URL and email turned into a link:
  * - emails → mailto:
  * - support.apple.com → the in-page Support section (#support)
  * - catnip.media → our own domain (laszlotuss.com), linked in-site
  * - everything else → a normal external link
+ * A token that matches the app's own name (e.g. "Teleprompter.com") is left as
+ * plain text — it's the brand, not a link.
  */
 export const AppDescription = ({
   text,
   appId,
+  appName,
 }: {
   text: string;
   appId: string;
+  appName: string;
 }) => {
-  void appId; // reserved for future per-app rewrites
+  const brand = normDomain(appName);
   const parts: ReactNode[] = [];
   const re = new RegExp(TOKEN_RE);
   let last = 0;
@@ -43,7 +55,10 @@ export const AppDescription = ({
 
     const isEmail = token.includes("@") && !/:\/\//.test(token);
 
-    if (isEmail) {
+    if (!isEmail && normDomain(token) === brand) {
+      // The app's brand name — not a link.
+      parts.push(token);
+    } else if (isEmail) {
       parts.push(
         <a key={key++} href={`mailto:${token}`} className={linkClass}>
           {token}
