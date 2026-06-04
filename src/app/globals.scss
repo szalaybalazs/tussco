@@ -30,8 +30,16 @@ body {
 
 html,
 body {
-  // background: #f2eecb11;
   overflow-x: hidden;
+}
+
+// Match the page background so overscroll / rubber-banding doesn't flash white
+// (the document, not the body, is the scroller).
+html {
+  background-color: #ffffff;
+  @media (prefers-color-scheme: dark) {
+    background-color: #1f2937; // gray-800, same as the body
+  }
 }
 
 div.image-container {
