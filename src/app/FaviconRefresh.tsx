@@ -23,19 +23,26 @@ export const FaviconRefresh = () => {
           'link[rel="icon"]:not(#dynamic-favicon)'
         )
       );
-      const current = managed[managed.length - 1];
-      const href = current?.href;
-      if (!href) return;
-      // Prune the accumulated duplicates, keeping the latest.
+      const target = managed[managed.length - 1]?.href;
+      if (!target) return;
+      // Prune accumulated duplicates, keeping the latest.
       managed.slice(0, -1).forEach((l) => l.remove());
-      // Recreate our own link last so the browser repaints the tab.
-      document.getElementById("dynamic-favicon")?.remove();
+
+      const existing = document.getElementById(
+        "dynamic-favicon"
+      ) as HTMLLinkElement | null;
+      // Already showing the right icon — don't churn (avoids a flicker).
+      if (existing?.href === target) return;
+
+      // Add the new icon *before* removing the old one, so the tab is never
+      // momentarily icon-less (which makes the browser flash its placeholder).
       const link = document.createElement("link");
-      link.id = "dynamic-favicon";
       link.rel = "icon";
-      link.href = href;
+      link.href = target;
       document.head.appendChild(link);
-    }, 150);
+      existing?.remove();
+      link.id = "dynamic-favicon";
+    }, 120);
     return () => clearTimeout(t);
   }, [pathname]);
 
