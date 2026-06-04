@@ -8,13 +8,13 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex flex-col items-center text-center md:flex-row md:justify-center md:items-center md:text-left md:gap-10 mt-24 mb-20 px-4">
+      <div className="max-w-2xl w-full mx-auto flex flex-col items-center text-center md:flex-row md:items-center md:text-left md:gap-8 mt-24 mb-20 px-4">
         <img
           className="bg-gray-700 w-36 rounded-[32px] shrink-0"
           src="/profile.jpg"
           alt="László Tuss"
         />
-        <div className="mt-12 md:mt-0">
+        <div className="mt-12 md:mt-0 md:flex-1">
           <h2 className="text-4xl font-bold text-indigo-500">
             Hi, I am László 👋
           </h2>
