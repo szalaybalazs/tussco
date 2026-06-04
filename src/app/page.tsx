@@ -67,16 +67,14 @@ export default async function Home() {
                         </h3>
                         <RoleStamp role={app.role} />
                       </div>
-                      {app.company && (
+                      {(app.genre || app.company) && (
                         <p className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
-                          {app.company}
+                          {[app.genre, app.company].filter(Boolean).join(" · ")}
                         </p>
                       )}
-                      {(app.genre || app.description) && (
+                      {app.description && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-                          {[app.genre, app.description]
-                            .filter(Boolean)
-                            .join(" · ")}
+                          {app.description}
                         </p>
                       )}
                     </div>
