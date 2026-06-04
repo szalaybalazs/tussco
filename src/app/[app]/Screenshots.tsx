@@ -51,7 +51,11 @@ export const Screenshots = ({
   }, [groups]);
 
   const resetScroll = useCallback(() => {
-    if (stripRef.current) stripRef.current.scrollLeft = 0;
+    // rAF so we run after the just-loaded image has reflowed the strip — each
+    // image finishing load can otherwise nudge the scroll off the first shot.
+    requestAnimationFrame(() => {
+      if (stripRef.current) stripRef.current.scrollLeft = 0;
+    });
   }, []);
 
   const group = groups.find((g) => g.platform === selected) ?? groups[0];
@@ -123,7 +127,7 @@ export const Screenshots = ({
               alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
                 i + 1
               }`}
-              onLoad={i === 0 ? resetScroll : undefined}
+              onLoad={resetScroll}
               className={`object-contain rounded-2xl shadow-md shrink-0 snap-start ${
                 isPhone(group.platform)
                   ? "h-[440px] w-auto max-w-none"
