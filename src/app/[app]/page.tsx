@@ -4,6 +4,7 @@ import Link from "next/link";
 import { RoleStamp } from "../RoleStamp";
 import { Screenshots } from "./Screenshots";
 import { fetchLinkPreview } from "../linkPreview";
+import { notFound } from "next/navigation";
 
 // Apple's help article for iMessage apps, shown on my sticker apps.
 const STICKER_SUPPORT_URL = "https://support.apple.com/en-us/104969";
@@ -17,11 +18,12 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const { app: id } = await params;
   const app = await getApp(id);
+  if (!app) return { title: "Not found | László Tuss" };
 
   return {
-    title: `${app?.name} | László Tuss`,
+    title: `${app.name} | László Tuss`,
     openGraph: {
-      images: app?.icon,
+      images: app.icon,
     },
   };
 };
@@ -71,7 +73,7 @@ const ArrowOut = ({ size = 18 }: { size?: number }) => (
 const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   const { app: id } = await params;
   const app = await getApp(id);
-  if (!app) throw new Error("App not found");
+  if (!app) notFound();
 
   const infoRows: [string, string | undefined][] = [
     ["Developer", app.developer],

@@ -219,10 +219,10 @@ export const getApps = async (): Promise<iApp[]> => {
     );
 };
 
-/** Find a single resolved app by its route id (appid or slug). */
+/** Find a single resolved app by its route id — its slug/id or its appid. */
 export const getApp = async (id: string): Promise<iApp | undefined> => {
   const apps = await getApps();
-  return apps.find((app) => app.id === id);
+  return apps.find((app) => app.id === id || app.appid === id);
 };
 
 /** Group resolved apps into calendar years, newest year first. */
