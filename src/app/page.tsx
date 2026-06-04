@@ -31,7 +31,7 @@ export default async function Home() {
           {/* Timeline rail */}
           <span
             aria-hidden
-            className="absolute left-8 top-3 bottom-3 w-px -translate-x-1/2 bg-gray-200 dark:bg-gray-700"
+            className="absolute left-8 -translate-x-1/2 md:left-2 md:translate-x-0 top-3 bottom-3 w-px bg-gray-200 dark:bg-gray-700"
           />
 
           {groups.map((group) => (
@@ -40,15 +40,15 @@ export default async function Home() {
               <div className="relative flex items-center mb-4">
                 <span
                   aria-hidden
-                  className="absolute left-8 -translate-x-1/2 w-3 h-3 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-gray-800"
+                  className="absolute left-8 -translate-x-1/2 md:left-2 w-3 h-3 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-gray-800"
                 />
-                <h2 className="pl-20 text-2xl font-black text-indigo-600 dark:text-indigo-400">
+                <h2 className="pl-20 md:pl-10 text-2xl font-black text-indigo-600 dark:text-indigo-400">
                   {group.year}
                 </h2>
               </div>
 
               {/* Apps released this year */}
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 md:pl-10">
                 {group.apps.map((app) => (
                   <Link
                     key={app.id}
