@@ -10,9 +10,9 @@ const PLATFORM_LABEL: Record<iPlatform, string> = {
   tvOS: "Apple TV",
 };
 
-// Tall phone shots use the horizontal strip; the wider platforms (iPad / Mac /
-// Apple TV) are scaled to fit the content width instead.
-const isStrip = (p: iPlatform) => p === "iPhone";
+// Phone shots get a fixed height (tall portrait cards). The wider platforms
+// (iPad / Mac / Apple TV) instead fit the viewport width — one shot per view.
+const isPhone = (p: iPlatform) => p === "iPhone";
 
 // iTunes screenshot URLs encode the pixel size, e.g. .../1488x2266bb.png — use
 // it so each fit-to-width shot reserves the right height (no load-time jump).
@@ -113,34 +113,18 @@ export const Screenshots = ({
         </div>
       )}
 
-      {isStrip(group.platform) ? (
-        // Tall phone shots: full-bleed horizontal strip, first shot visible
-        // (padding lives on the track so it scrolls with the first image).
-        <div
-          ref={stripRef}
-          className="relative left-[calc(50%-50vw)] w-screen overflow-x-auto scrollbar-none snap-x scroll-pl-5 sm:scroll-pl-8"
-        >
-          <div className="flex gap-4 px-5 sm:px-8 w-max mx-auto">
-            {group.urls.map((src, i) => (
-              <img
-                key={src}
-                src={src}
-                alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
-                  i + 1
-                }`}
-                onLoad={i === 0 ? resetScroll : undefined}
-                className="h-[440px] w-auto max-w-none object-contain rounded-2xl shadow-md shrink-0 snap-start"
-              />
-            ))}
-          </div>
-        </div>
-      ) : (
-        // Wider shots (iPad / Mac / Apple TV): stacked and scrolled vertically,
-        // each scaled to fit the content width. The height comes from the
-        // shot's own aspect ratio, so the image fills the width with padding.
-        <div className="flex flex-col gap-4 px-1">
+      {/* Full-bleed horizontal strip, first shot visible (padding lives on the
+          track so it scrolls with the first image). Phone shots use a fixed
+          height; wider shots fit the viewport width — one per view, height from
+          the shot's own aspect ratio. */}
+      <div
+        ref={stripRef}
+        className="relative left-[calc(50%-50vw)] w-screen overflow-x-auto scrollbar-none snap-x scroll-pl-5 sm:scroll-pl-8"
+      >
+        <div className="flex gap-4 px-5 sm:px-8 w-max mx-auto">
           {group.urls.map((src, i) => {
-            const aspectRatio = aspectRatioOf(src);
+            const phone = isPhone(group.platform);
+            const aspectRatio = phone ? undefined : aspectRatioOf(src);
             return (
               <img
                 key={src}
@@ -148,15 +132,20 @@ export const Screenshots = ({
                 alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
                   i + 1
                 }`}
+                onLoad={i === 0 ? resetScroll : undefined}
                 style={aspectRatio ? { aspectRatio } : undefined}
-                className={`w-full object-contain rounded-2xl shadow-md ${
-                  aspectRatio ? "" : "h-auto"
+                className={`object-contain rounded-2xl shadow-md shrink-0 snap-start ${
+                  phone
+                    ? "h-[440px] w-auto max-w-none"
+                    : `w-[calc(100vw-2.5rem)] sm:w-[calc(100vw-4rem)] max-w-3xl ${
+                        aspectRatio ? "" : "h-auto"
+                      }`
                 }`}
               />
             );
           })}
         </div>
-      )}
+      </div>
     </section>
   );
 };
