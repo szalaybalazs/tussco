@@ -10,6 +10,7 @@ export interface iTunesApp {
   artworkUrl60?: string;
   screenshotUrls?: string[];
   ipadScreenshotUrls?: string[];
+  appletvScreenshotUrls?: string[];
   averageUserRating?: number;
   userRatingCount?: number;
   formattedPrice?: string;

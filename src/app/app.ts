@@ -1,6 +1,6 @@
 import appList from "./apps.json";
 import { lookupApp, iTunesApp } from "./itunes";
-import { discoverScreenshots } from "./screenshots";
+import { discoverScreenshots, iScreenshotGroup } from "./screenshots";
 
 /**
  * How an app relates to me — shown as a stamp on the card and detail page.
@@ -66,7 +66,10 @@ export interface iApp {
   version?: string;
   size?: string;
   minimumOsVersion?: string;
-  screenshots: string[];
+  /** Device screenshots grouped by platform (iPhone, iPad, macOS, tvOS). */
+  screenshotGroups: iScreenshotGroup[];
+  /** Single fallback banner (image.*) shown when there are no device shots. */
+  screenshotBanner?: string;
   storeUrl?: string;
   price?: string;
   background?: string;
@@ -98,20 +101,25 @@ const yearOf = (date: string) => new Date(date).getFullYear();
 /** Merge a raw JSON entry with optional iTunes data into a resolved app. */
 const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
   if (raw.appid && itunes) {
-    const itunesShots = [
-      ...(itunes.screenshotUrls ?? []),
-      ...(itunes.ipadScreenshotUrls ?? []),
-    ];
+    const liveGroups: iScreenshotGroup[] = [];
+    if (itunes.screenshotUrls?.length)
+      liveGroups.push({ platform: "iPhone", urls: itunes.screenshotUrls });
+    if (itunes.ipadScreenshotUrls?.length)
+      liveGroups.push({ platform: "iPad", urls: itunes.ipadScreenshotUrls });
+    if (itunes.appletvScreenshotUrls?.length)
+      liveGroups.push({ platform: "tvOS", urls: itunes.appletvScreenshotUrls });
+
     const id = raw.id || raw.appid;
     // Prefer live App Store screenshots, falling back to local ones in
     // public/screens/<appid|id>/ when the API exposes none. With
     // forceLocalScreenshots, use only the local ones (ignore the App Store).
-    const localShots = discoverScreenshots([raw.appid, id]);
-    const screenshots = raw.forceLocalScreenshots
-      ? localShots
-      : itunesShots.length
-      ? itunesShots
-      : localShots;
+    const local = discoverScreenshots([raw.appid, id]);
+    const { groups: screenshotGroups, banner: screenshotBanner } =
+      raw.forceLocalScreenshots
+        ? local
+        : liveGroups.length
+        ? { groups: liveGroups, banner: undefined }
+        : local;
     const releaseDate = raw.releaseDate || itunes.releaseDate || "";
     if (!releaseDate) return null;
 
@@ -137,7 +145,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       version: itunes.version,
       size: formatBytes(itunes.fileSizeBytes),
       minimumOsVersion: itunes.minimumOsVersion,
-      screenshots,
+      screenshotGroups,
+      screenshotBanner,
       storeUrl:
         raw.href ||
         itunes.trackViewUrl ||
@@ -151,6 +160,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
   // Local fallback: requires enough data to stand on its own.
   if (!raw.name || !raw.icon || !raw.releaseDate) return null;
   const id = raw.id || slugify(raw.name);
+  // A delisted app can still have an appid (e.g. screenshots filed under it).
+  const local = discoverScreenshots([raw.appid, id]);
   return {
     id,
     appid: raw.appid,
@@ -165,8 +176,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     rating: raw.rating,
     ratingCount: raw.ratingCount,
     minimumOsVersion: raw.minimumOsVersion,
-    // A delisted app can still have an appid (e.g. screenshots filed under it).
-    screenshots: discoverScreenshots([raw.appid, id]),
+    screenshotGroups: local.groups,
+    screenshotBanner: local.banner,
     storeUrl: raw.href,
     background: raw.background,
     color: raw.color,
