@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <header className="flex flex-shrink-0 backdrop-blur-lg bg-white/75 dark:bg-gray-800/75 z-50 sticky top-0">
-      <div className="flex flex-shrink-0 px-4 md:px-0 items-center max-w-4xl mx-auto w-full border-b border-gray-300 dark:border-gray-600 h-[80px]">
+      <div className="flex flex-shrink-0 px-5 sm:px-8 items-center max-w-4xl mx-auto w-full border-b border-gray-300 dark:border-gray-600 h-[80px]">
         <div className="flex-1">
           {isAppPage ? (
             <button
