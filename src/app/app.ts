@@ -98,6 +98,15 @@ const formatBytes = (bytes?: string): string | undefined => {
 
 const yearOf = (date: string) => new Date(date).getFullYear();
 
+// My Apple affiliate provider + campaign tokens, used to build tracked App
+// Store links for my own (indie) apps.
+const APPLE_PT = "118038397";
+const APPLE_CT = "laszlotuss.com";
+const appStoreUrl = (appid: string, tracked: boolean) =>
+  tracked
+    ? `https://apps.apple.com/app/apple-store/id${appid}?pt=${APPLE_PT}&ct=${APPLE_CT}&mt=8`
+    : `https://apps.apple.com/app/id${appid}`;
+
 /** Merge a raw JSON entry with optional iTunes data into a resolved app. */
 const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
   if (raw.appid && itunes) {
@@ -122,6 +131,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
         : local;
     const releaseDate = raw.releaseDate || itunes.releaseDate || "";
     if (!releaseDate) return null;
+    const role = raw.role ?? "indie";
 
     return {
       id,
@@ -136,7 +146,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       description: raw.description || itunes.description || "",
       releaseDate,
       year: yearOf(releaseDate),
-      role: raw.role ?? "indie",
+      role,
       genre: raw.genre || itunes.primaryGenreName,
       developer: itunes.artistName,
       company: raw.company ?? itunes.artistName,
@@ -147,10 +157,12 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       minimumOsVersion: itunes.minimumOsVersion,
       screenshotGroups,
       screenshotBanner,
+      // My own apps get tracked App Store links; others use the plain listing.
       storeUrl:
         raw.href ||
-        itunes.trackViewUrl ||
-        `https://apps.apple.com/app/id${raw.appid}`,
+        (role === "indie"
+          ? appStoreUrl(raw.appid, true)
+          : itunes.trackViewUrl || appStoreUrl(raw.appid, false)),
       price: itunes.formattedPrice,
       background: raw.background,
       color: raw.color,
