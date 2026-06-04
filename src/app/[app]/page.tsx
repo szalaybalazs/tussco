@@ -131,14 +131,14 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
         </div>
       </div>
 
-      {/* Screenshots — full-bleed, centered until they overflow */}
+      {/* Screenshots — full-bleed; centered when they fit, scrolling from the
+          start (first one visible) when they overflow. */}
       {app.screenshots.length > 0 && (
-        <div className="mt-10 relative left-[calc(50%-50vw)] w-screen">
-          <div
-            className="flex gap-4 overflow-x-auto px-5 snap-x snap-mandatory scrollbar-none"
-            style={{ justifyContent: "safe center" }}
-          >
+        <div className="mt-10 relative left-[calc(50%-50vw)] w-screen overflow-x-auto scrollbar-none snap-x px-5 sm:px-8">
+          <div className="flex gap-4 w-max mx-auto">
             {app.screenshots.map((src, i) => {
+              // The local fallback banner (image.*) isn't a device shot — no
+              // rounded corners for it.
               const isBanner = /\/image\.[a-z0-9]+$/i.test(src);
               return (
                 <img
@@ -146,7 +146,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
                   src={src}
                   alt={`${app.name} screenshot ${i + 1}`}
                   loading="lazy"
-                  className={`h-[440px] w-auto shadow-md shrink-0 snap-start ${
+                  className={`h-[440px] w-auto max-w-none object-contain shadow-md shrink-0 snap-start ${
                     isBanner ? "" : "rounded-2xl"
                   }`}
                 />
