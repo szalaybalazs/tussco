@@ -19,8 +19,8 @@ const Header: FunctionComponent<iHeaderProps> = () => {
           </Link>
         </div>
         <Link href="/">
-          <h1 className="text-indigo-600 dark:text-indigo-400 font-black text-xl whitespace-nowrap">
-            Tuss Co.
+          <h1 className="text-indigo-600 dark:text-indigo-400 font-black text-lg sm:text-xl whitespace-nowrap">
+            László Tuss
           </h1>
         </Link>
         <div className="flex-1 flex gap-2 justify-end">
