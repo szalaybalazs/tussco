@@ -1,12 +1,12 @@
 [
   { "appid": "6470717066" },
-  { "appid": "6745643890" },
+  { "appid": "6745643890", "sticker": true },
   { "appid": "6451499657" },
-  { "appid": "6471989101" },
+  { "appid": "6471989101", "sticker": true },
   { "appid": "6450907393" },
   { "appid": "6443723021" },
-  { "appid": "1643348838" },
-  { "appid": "1610956296" },
+  { "appid": "1643348838", "sticker": true },
+  { "appid": "1610956296", "sticker": true },
   { "appid": "1558727245" },
   { "appid": "1571539250" },
   { "appid": "1330408121" },
@@ -44,6 +44,7 @@
     "genre": "Stickers",
     "rating": 4.36,
     "ratingCount": 14,
+    "sticker": true,
     "description": "Put big emojis in your iMessage chats. Emoji Stickers turns any emoji into an oversized sticker you can drop straight into a conversation."
   },
     {

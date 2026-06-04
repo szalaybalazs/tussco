@@ -96,7 +96,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   const rows = infoRows.filter(([, value]) => Boolean(value));
 
   // Sticker apps get a "Support" card pointing at Apple's iMessage-apps guide.
-  const isSticker = /sticker/i.test(app.genre || "");
+  const isSticker = !!app.sticker || /sticker/i.test(app.genre || "");
   const support = isSticker ? await fetchLinkPreview(STICKER_SUPPORT_URL) : null;
 
   return (

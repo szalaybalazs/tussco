@@ -49,6 +49,9 @@ export interface iRawApp {
   /** Marketing/website URL — shows a "Website" button next to the App Store
    *  one (handy for delisted apps that still have a live site). */
   website?: string;
+  /** Force-show the iMessage "Support" card even when the App Store genre
+   *  isn't "Stickers" (e.g. an app that bundles a sticker pack). */
+  sticker?: boolean;
 }
 
 /** A fully-resolved app used everywhere in the UI. */
@@ -75,6 +78,7 @@ export interface iApp {
   screenshotBanner?: string;
   storeUrl?: string;
   website?: string;
+  sticker?: boolean;
   price?: string;
   background?: string;
   color?: string;
@@ -168,6 +172,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
           ? appStoreUrl(raw.appid, true)
           : itunes.trackViewUrl || appStoreUrl(raw.appid, false)),
       website: raw.website,
+      sticker: raw.sticker,
       price: itunes.formattedPrice,
       background: raw.background,
       color: raw.color,
@@ -197,6 +202,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     screenshotBanner: local.banner,
     storeUrl: raw.href,
     website: raw.website,
+    sticker: raw.sticker,
     background: raw.background,
     color: raw.color,
   };
