@@ -11,15 +11,9 @@ const PLATFORM_LABEL: Record<iPlatform, string> = {
 };
 
 // Phone shots get a fixed height (tall portrait cards). The wider platforms
-// (iPad / Mac / Apple TV) instead fit the viewport width — one shot per view.
+// (iPad / Mac / Apple TV) fit the viewport width but are capped at 500px tall
+// so a (often portrait) shot fits the screen — one per view.
 const isPhone = (p: iPlatform) => p === "iPhone";
-
-// iTunes screenshot URLs encode the pixel size, e.g. .../1488x2266bb.png — use
-// it so each fit-to-width shot reserves the right height (no load-time jump).
-const aspectRatioOf = (url: string): string | undefined => {
-  const m = url.match(/\/(\d+)x(\d+)(?:bb)?\.(?:png|jpe?g|webp)/i);
-  return m ? `${m[1]} / ${m[2]}` : undefined;
-};
 
 const detectPlatform = (): iPlatform => {
   if (typeof navigator === "undefined") return "iPhone";
@@ -121,29 +115,22 @@ export const Screenshots = ({
         ref={stripRef}
         className="relative left-[calc(50%-50vw)] w-screen overflow-x-auto scrollbar-none snap-x scroll-pl-5 sm:scroll-pl-8"
       >
-        <div className="flex gap-4 px-5 sm:px-8 w-max mx-auto">
-          {group.urls.map((src, i) => {
-            const phone = isPhone(group.platform);
-            const aspectRatio = phone ? undefined : aspectRatioOf(src);
-            return (
-              <img
-                key={src}
-                src={src}
-                alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
-                  i + 1
-                }`}
-                onLoad={i === 0 ? resetScroll : undefined}
-                style={aspectRatio ? { aspectRatio } : undefined}
-                className={`object-contain rounded-2xl shadow-md shrink-0 snap-start ${
-                  phone
-                    ? "h-[440px] w-auto max-w-none"
-                    : `w-[calc(100vw-2.5rem)] sm:w-[calc(100vw-4rem)] max-w-3xl ${
-                        aspectRatio ? "" : "h-auto"
-                      }`
-                }`}
-              />
-            );
-          })}
+        <div className="flex items-center gap-4 px-5 sm:px-8 w-max mx-auto">
+          {group.urls.map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
+                i + 1
+              }`}
+              onLoad={i === 0 ? resetScroll : undefined}
+              className={`object-contain rounded-2xl shadow-md shrink-0 snap-start ${
+                isPhone(group.platform)
+                  ? "h-[440px] w-auto max-w-none"
+                  : "w-auto h-auto max-w-[calc(100vw-2.5rem)] sm:max-w-[calc(100vw-4rem)] max-h-[500px]"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
