@@ -14,6 +14,13 @@ const PLATFORM_LABEL: Record<iPlatform, string> = {
 // Apple TV) are scaled to fit the content width instead.
 const isStrip = (p: iPlatform) => p === "iPhone";
 
+// iTunes screenshot URLs encode the pixel size, e.g. .../1488x2266bb.png — use
+// it so each fit-to-width shot reserves the right height (no load-time jump).
+const aspectRatioOf = (url: string): string | undefined => {
+  const m = url.match(/\/(\d+)x(\d+)(?:bb)?\.(?:png|jpe?g|webp)/i);
+  return m ? `${m[1]} / ${m[2]}` : undefined;
+};
+
 const detectPlatform = (): iPlatform => {
   if (typeof navigator === "undefined") return "iPhone";
   const ua = navigator.userAgent || "";
@@ -25,21 +32,6 @@ const detectPlatform = (): iPlatform => {
   if (/Apple ?TV|tvOS/i.test(ua)) return "tvOS";
   return "iPhone";
 };
-
-const Chevron = () => (
-  <svg
-    className="w-4 h-4"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
 
 export const Screenshots = ({
   groups,
@@ -57,7 +49,6 @@ export const Screenshots = ({
   const [selected, setSelected] = useState<iPlatform | undefined>(
     defaultPlatform
   );
-  const [menuOpen, setMenuOpen] = useState(false);
   const stripRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -95,66 +86,30 @@ export const Screenshots = ({
   return (
     <section className="mt-10">
       {showPicker && (
-        <div className="relative mb-5 inline-block">
-          <button
-            type="button"
-            aria-haspopup="listbox"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((o) => !o)}
-            className="inline-flex items-center gap-2 rounded-xl bg-gray-100 dark:bg-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:scale-105 active:scale-95 transition-all"
-          >
-            <span>{PLATFORM_LABEL[group.platform]}</span>
-            <Chevron />
-          </button>
-
-          {menuOpen && (
-            <>
-              <div
-                className="fixed inset-0 z-40"
-                aria-hidden
-                onClick={() => setMenuOpen(false)}
-              />
-              <ul
-                role="listbox"
-                className="absolute left-0 top-full mt-2 z-50 min-w-[10rem] overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg py-1"
+        <div
+          role="tablist"
+          aria-label="Screenshot platform"
+          className="inline-flex mb-6 rounded-xl bg-gray-100 dark:bg-gray-700/60 p-1"
+        >
+          {groups.map((g) => {
+            const active = g.platform === group.platform;
+            return (
+              <button
+                key={g.platform}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setSelected(g.platform)}
+                className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition-all ${
+                  active
+                    ? "bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-300 shadow-sm"
+                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                }`}
               >
-                {groups.map((g) => (
-                  <li key={g.platform}>
-                    <button
-                      type="button"
-                      role="option"
-                      aria-selected={g.platform === group.platform}
-                      onClick={() => {
-                        setSelected(g.platform);
-                        setMenuOpen(false);
-                      }}
-                      className={`flex w-full items-center justify-between gap-4 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                        g.platform === group.platform
-                          ? "text-indigo-600 dark:text-indigo-300"
-                          : "text-gray-700 dark:text-gray-200"
-                      }`}
-                    >
-                      <span>{PLATFORM_LABEL[g.platform]}</span>
-                      {g.platform === group.platform && (
-                        <svg
-                          className="w-4 h-4"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden
-                        >
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+                {PLATFORM_LABEL[g.platform]}
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -180,18 +135,26 @@ export const Screenshots = ({
           </div>
         </div>
       ) : (
-        // Wider shots (iPad / Mac / Apple TV): scaled to fit the content width.
-        <div className="flex flex-col gap-4">
-          {group.urls.map((src, i) => (
-            <img
-              key={src}
-              src={src}
-              alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
-                i + 1
-              }`}
-              className="w-full h-auto object-contain rounded-2xl shadow-md"
-            />
-          ))}
+        // Wider shots (iPad / Mac / Apple TV): stacked and scrolled vertically,
+        // each scaled to fit the content width. The height comes from the
+        // shot's own aspect ratio, so the image fills the width with padding.
+        <div className="flex flex-col gap-4 px-1">
+          {group.urls.map((src, i) => {
+            const aspectRatio = aspectRatioOf(src);
+            return (
+              <img
+                key={src}
+                src={src}
+                alt={`${appName} ${PLATFORM_LABEL[group.platform]} screenshot ${
+                  i + 1
+                }`}
+                style={aspectRatio ? { aspectRatio } : undefined}
+                className={`w-full object-contain rounded-2xl shadow-md ${
+                  aspectRatio ? "" : "h-auto"
+                }`}
+              />
+            );
+          })}
         </div>
       )}
     </section>
