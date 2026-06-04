@@ -8,18 +8,20 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex flex-col items-center mb-20 text-center px-4">
+      <div className="flex flex-col items-center text-center md:flex-row md:justify-center md:items-center md:text-left md:gap-10 mt-24 mb-20 px-4">
         <img
-          className="bg-gray-700 w-36 rounded-[32px] mt-24"
+          className="bg-gray-700 w-36 rounded-[32px] shrink-0"
           src="/profile.jpg"
           alt="László Tuss"
         />
-        <h2 className="text-4xl font-bold mt-12 text-indigo-500">
-          Hi, I am László 👋
-        </h2>
-        <p className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
-          I am an iOS developer & I build indie applications
-        </p>
+        <div className="mt-12 md:mt-0">
+          <h2 className="text-4xl font-bold text-indigo-500">
+            Hi, I am László 👋
+          </h2>
+          <p className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
+            I am an iOS developer & I build indie applications
+          </p>
+        </div>
       </div>
 
       <section className="flex-1 max-w-2xl w-full mx-auto px-4 pb-24">
