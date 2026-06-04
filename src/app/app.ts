@@ -1,3 +1,4 @@
+import { cache } from "react";
 import appList from "./apps.json";
 import { lookupApp, iTunesApp } from "./itunes";
 import { discoverScreenshots, iScreenshotGroup } from "./screenshots";
@@ -219,7 +220,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
 };
 
 /** Resolve every app in apps.json, newest release first. */
-export const getApps = async (): Promise<iApp[]> => {
+export const getApps = cache(async (): Promise<iApp[]> => {
   const raws = appList as iRawApp[];
   const resolved = await Promise.all(
     raws.map(async (raw) => {
@@ -233,13 +234,25 @@ export const getApps = async (): Promise<iApp[]> => {
       (a, b) =>
         new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
     );
-};
+});
 
-/** Find a single resolved app by its route id — its slug/id or its appid. */
-export const getApp = async (id: string): Promise<iApp | undefined> => {
-  const apps = await getApps();
-  return apps.find((app) => app.id === id || app.appid === id);
-};
+/** Find a single resolved app by its route id — its slug/id or its appid.
+ *  Resolves only that one entry, so an app page hits the App Store once
+ *  (not once per app in the whole list). */
+export const getApp = cache(
+  async (id: string): Promise<iApp | undefined> => {
+    const raws = appList as iRawApp[];
+    const raw = raws.find((r) => {
+      if (r.appid === id) return true;
+      const resolvedId =
+        r.id || r.appid || (r.name ? slugify(r.name) : undefined);
+      return resolvedId === id;
+    });
+    if (!raw) return undefined;
+    const itunes = raw.appid ? await lookupApp(raw.appid) : null;
+    return normalize(raw, itunes) ?? undefined;
+  }
+);
 
 const normalizeName = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 
