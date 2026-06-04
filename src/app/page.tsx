@@ -62,9 +62,22 @@ export default async function Home() {
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-gray-800 dark:text-gray-200 truncate">
+                        <h3 className="font-bold text-gray-800 dark:text-gray-200 truncate min-w-0">
                           {app.name}
                         </h3>
+                        {typeof app.rating === "number" && app.rating > 0 && (
+                          <div className="ml-auto shrink-0 flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+                            <svg
+                              className="w-4 h-4 text-amber-400"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              aria-hidden
+                            >
+                              <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.401 8.168L12 18.896l-7.335 3.863 1.401-8.168L.132 9.211l8.2-1.193z" />
+                            </svg>
+                            <span>{app.rating.toFixed(1)}</span>
+                          </div>
+                        )}
                       </div>
                       <div className="flex items-center gap-2">
                         {(app.genre || app.company) && (
@@ -80,19 +93,6 @@ export default async function Home() {
                         </p>
                       )}
                     </div>
-                    {typeof app.rating === "number" && app.rating > 0 && (
-                      <div className="shrink-0 self-center flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                        <svg
-                          className="w-4 h-4 text-amber-400"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden
-                        >
-                          <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.401 8.168L12 18.896l-7.335 3.863 1.401-8.168L.132 9.211l8.2-1.193z" />
-                        </svg>
-                        <span>{app.rating.toFixed(1)}</span>
-                      </div>
-                    )}
                   </Link>
                 ))}
               </div>
