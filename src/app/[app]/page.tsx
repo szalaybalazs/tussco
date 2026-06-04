@@ -173,15 +173,33 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
         </section>
       )}
 
-      {/* Privacy — only for my own (indie) App Store apps */}
+      {/* Legal — only for my own (indie) App Store apps */}
       {app.role === "indie" && app.appid && (
-        <div className="mt-10 pt-8 border-t dark:border-gray-700">
+        <div className="mt-12 pt-8 border-t dark:border-gray-700 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+          <span>
+            © 2026{" "}
+            <a
+              href="https://catnip.media"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-indigo-500 hover:underline underline-offset-2"
+            >
+              Catnip Media
+            </a>
+          </span>
+          <span aria-hidden>·</span>
           <Link
-            className="flex items-center gap-2 text-indigo-500 font-medium text-lg hover:underline underline-offset-2"
             href={`/${app.id}/privacy-policy`}
+            className="text-indigo-500 hover:underline underline-offset-2"
           >
-            <span>Privacy Policy</span>
-            <ArrowOut size={16} />
+            Privacy Policy
+          </Link>
+          <span aria-hidden>·</span>
+          <Link
+            href={`/${app.id}/privacy-policy#terms`}
+            className="text-indigo-500 hover:underline underline-offset-2"
+          >
+            Terms of Use
           </Link>
         </div>
       )}

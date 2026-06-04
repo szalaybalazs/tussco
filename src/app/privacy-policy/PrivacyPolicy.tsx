@@ -76,6 +76,52 @@ const PrivacyPolicy: FunctionComponent<iPrivacyPolicyProps> = ({
         provided us with information without their consent, he or she should
         contact me.
       </p>
+      <h2
+        id="terms"
+        className="font-bold text-2xl mt-14 pt-8 border-t border-gray-200 dark:border-gray-700 scroll-mt-24 text-gray-700 dark:text-gray-300"
+      >
+        Terms of Use
+      </h2>
+      <p className="mt-4">
+        By downloading or using {app} (the “Application”) you agree to these
+        Terms of Use, which together with Apple&apos;s Licensed Application
+        End-User License Agreement (EULA) govern your use of the Application. If
+        you do not agree, please do not download or use the Application.
+      </p>
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
+        License
+      </h2>
+      <p className="mt-4">
+        I grant you a limited, non-exclusive, non-transferable, revocable
+        license to use the Application for your personal, non-commercial
+        purposes on any Apple-branded device that you own or control, as
+        permitted by the App Store Terms of Service.
+      </p>
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
+        Restrictions
+      </h2>
+      <p className="mt-4">
+        You may not copy, modify, distribute, sell, or lease any part of the
+        Application, nor reverse engineer or attempt to extract its source code,
+        unless laws prohibit these restrictions or you have written permission.
+      </p>
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
+        Disclaimer &amp; Limitation of Liability
+      </h2>
+      <p className="mt-4">
+        The Application is provided “as is” and “as available”, without
+        warranties of any kind. To the maximum extent permitted by law, I am not
+        liable for any indirect, incidental, or consequential damages arising
+        from your use of, or inability to use, the Application.
+      </p>
+      <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
+        Changes to These Terms
+      </h2>
+      <p className="mt-4">
+        I may update these Terms from time to time. Continued use of the
+        Application after any change constitutes your acceptance of the revised
+        Terms.
+      </p>
       <h2 className="font-bold text-xl mt-8 text-gray-700 dark:text-gray-300">
         Contact Me
       </h2>
