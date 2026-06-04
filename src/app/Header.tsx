@@ -11,9 +11,6 @@ const pillClasses =
 const iconClasses =
   "w-8 h-8 rounded-xl bg-gray-100 flex items-center justify-center hover:scale-105 active:scale-95 transition-all text-gray-600 hover:text-indigo-500 dark:bg-gray-700 dark:text-indigo-300";
 
-// Top-level routes that aren't an app detail page.
-const STATIC_ROUTES = ["about", "privacy-policy"];
-
 const links = [appStore, ...socials];
 
 const Header = () => {
@@ -21,9 +18,8 @@ const Header = () => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const segments = pathname.split("/").filter(Boolean);
-  const isAppPage =
-    segments.length > 0 && !STATIC_ROUTES.includes(segments[0]);
+  // Home offers the About link; every other page (about, app, privacy) a Back button.
+  const showBack = pathname !== "/";
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => setMenuOpen(false), [pathname]);
@@ -32,7 +28,7 @@ const Header = () => {
     <header className="flex flex-shrink-0 backdrop-blur-lg bg-white/75 dark:bg-gray-800/75 z-50 sticky top-0">
       <div className="flex flex-shrink-0 px-5 sm:px-8 items-center max-w-4xl mx-auto w-full border-b border-gray-300 dark:border-gray-600 h-[80px]">
         <div className="flex-1">
-          {isAppPage ? (
+          {showBack ? (
             <button
               type="button"
               onClick={() => {
