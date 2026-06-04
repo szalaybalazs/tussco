@@ -236,6 +236,31 @@ export const getApp = async (id: string): Promise<iApp | undefined> => {
   return apps.find((app) => app.id === id || app.appid === id);
 };
 
+const normalizeName = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/**
+ * Resolve a legacy `?app=` value (e.g. "SpeedometerLivePip", "RemoveTracking")
+ * to an app by its appid, id or normalized name. On multiple matches, prefer
+ * the shortest appid/id.
+ */
+export const findAppByName = async (
+  name: string
+): Promise<iApp | undefined> => {
+  const target = normalizeName(name);
+  if (!target) return undefined;
+  const apps = await getApps();
+  const matches = apps.filter(
+    (a) =>
+      a.appid === name ||
+      a.id === name ||
+      normalizeName(a.id) === target ||
+      normalizeName(a.name) === target
+  );
+  return matches.sort(
+    (a, b) => (a.appid || a.id).length - (b.appid || b.id).length
+  )[0];
+};
+
 /** Group resolved apps into calendar years, newest year first. */
 export const groupByYear = (apps: iApp[]): iYearGroup[] => {
   const byYear = new Map<number, iApp[]>();
