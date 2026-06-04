@@ -14,7 +14,7 @@ const iconClasses =
 // Top-level routes that aren't an app detail page.
 const STATIC_ROUTES = ["about", "privacy-policy"];
 
-const links = [...socials, appStore];
+const links = [appStore, ...socials];
 
 const Header = () => {
   const pathname = usePathname();

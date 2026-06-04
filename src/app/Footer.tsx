@@ -21,7 +21,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className="flex items-center gap-3">
-          {[...socials, appStore].map((social) => (
+          {[appStore, ...socials].map((social) => (
             <a
               key={social.name}
               href={social.href}
