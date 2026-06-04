@@ -19,7 +19,9 @@ export default async function Home() {
             Hi, I am László 👋
           </h2>
           <p className="mt-2 text-lg font-medium text-gray-500 dark:text-gray-400">
-            I am an iOS developer & I build indie applications
+            Experienced iOS Developer with over 10 years in mobile app
+            development, working across freelance projects, startups, and
+            established companies.
           </p>
         </div>
       </div>
