@@ -5,6 +5,7 @@ import { RoleStamp } from "../RoleStamp";
 import { Screenshots } from "./Screenshots";
 import { HashScroll } from "./HashScroll";
 import { fetchLinkPreview } from "../linkPreview";
+import { AppDescription } from "./AppDescription";
 import { notFound } from "next/navigation";
 
 // Apple's help article for iMessage apps, shown on my sticker apps.
@@ -95,9 +96,21 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   ];
   const rows = infoRows.filter(([, value]) => Boolean(value));
 
-  // Sticker apps get a "Support" card pointing at Apple's iMessage-apps guide.
+  // A support.apple.com link in the description becomes the app's own support
+  // link; otherwise sticker apps point at Apple's iMessage-apps guide.
   const isSticker = !!app.sticker || /sticker/i.test(app.genre || "");
-  const support = isSticker ? await fetchLinkPreview(STICKER_SUPPORT_URL) : null;
+  const descSupport = app.description
+    .match(/(?:https?:\/\/)?support\.apple\.com\/\S+/i)?.[0]
+    ?.replace(/[.,;)]+$/, "");
+  const supportUrl = descSupport
+    ? descSupport.startsWith("http")
+      ? descSupport
+      : `https://${descSupport}`
+    : isSticker
+    ? STICKER_SUPPORT_URL
+    : undefined;
+  const supportFallbackTitle = descSupport ? "Support" : STICKER_SUPPORT_TITLE;
+  const support = supportUrl ? await fetchLinkPreview(supportUrl) : null;
 
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-12">
@@ -172,7 +185,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
             About
           </h2>
           <p className="whitespace-pre-line leading-relaxed text-lg font-medium text-gray-600 dark:text-gray-300">
-            {app.description}
+            <AppDescription text={app.description} appId={app.id} />
           </p>
         </section>
       )}
@@ -201,14 +214,14 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
         </section>
       )}
 
-      {/* Support — Apple's iMessage-apps guide, for my sticker apps */}
-      {isSticker && (
+      {/* Support — the app's own support page, or Apple's iMessage guide */}
+      {supportUrl && (
         <section id="support" className="mt-12 scroll-mt-24">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3">
             Support
           </h2>
           <a
-            href={STICKER_SUPPORT_URL}
+            href={supportUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-4 rounded-3xl border border-gray-200 dark:border-gray-700 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
@@ -239,7 +252,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
             )}
             <span className="min-w-0 flex-1">
               <span className="block font-semibold text-gray-800 dark:text-gray-200">
-                {support?.title || STICKER_SUPPORT_TITLE}
+                {support?.title || supportFallbackTitle}
               </span>
               <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                 {support?.description || "support.apple.com"}
