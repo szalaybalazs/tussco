@@ -65,13 +65,15 @@ export default async function Home() {
                         <h3 className="font-bold text-gray-800 dark:text-gray-200 truncate">
                           {app.name}
                         </h3>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {(app.genre || app.company) && (
+                          <span className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate min-w-0">
+                            {[app.genre, app.company].filter(Boolean).join(" · ")}
+                          </span>
+                        )}
                         <RoleStamp role={app.role} />
                       </div>
-                      {(app.genre || app.company) && (
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
-                          {[app.genre, app.company].filter(Boolean).join(" · ")}
-                        </p>
-                      )}
                       {app.description && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                           {app.description}
