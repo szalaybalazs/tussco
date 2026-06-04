@@ -55,6 +55,11 @@ export interface iRawApp {
   sticker?: boolean;
   /** Show a "Manage subscriptions" support card. */
   subscription?: boolean;
+  /** Show an Apple Watch support card (also auto-shown when there are watchOS
+   *  screenshots). */
+  watch?: boolean;
+  /** Show a Picture in Picture support card. */
+  pip?: boolean;
 }
 
 /** A fully-resolved app used everywhere in the UI. */
@@ -83,6 +88,8 @@ export interface iApp {
   website?: string;
   sticker?: boolean;
   subscription?: boolean;
+  watch?: boolean;
+  pip?: boolean;
   price?: string;
   background?: string;
   color?: string;
@@ -183,6 +190,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       website: withProtocol(raw.website),
       sticker: raw.sticker,
       subscription: raw.subscription,
+      watch: raw.watch,
+      pip: raw.pip,
       price: itunes.formattedPrice,
       background: raw.background,
       color: raw.color,
@@ -214,6 +223,8 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     website: withProtocol(raw.website),
     sticker: raw.sticker,
     subscription: raw.subscription,
+    watch: raw.watch,
+    pip: raw.pip,
     background: raw.background,
     color: raw.color,
   };
