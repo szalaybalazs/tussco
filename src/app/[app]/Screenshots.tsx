@@ -131,7 +131,9 @@ export const Screenshots = ({
               onLoad={resetScroll}
               className={`object-contain rounded-2xl shadow-md shrink-0 snap-start ${
                 isTall(group.platform)
-                  ? "h-[440px] w-auto max-w-none"
+                  ? `${
+                      group.platform === "watchOS" ? "h-[220px]" : "h-[440px]"
+                    } w-auto max-w-none`
                   : "w-auto h-auto max-w-[calc(100vw-2.5rem)] sm:max-w-[calc(100vw-4rem)] max-h-[500px]"
               }`}
             />
