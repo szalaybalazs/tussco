@@ -3,6 +3,12 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { RoleStamp } from "../RoleStamp";
 import { Screenshots } from "./Screenshots";
+import { fetchLinkPreview } from "../linkPreview";
+
+// Apple's help article for iMessage apps, shown on my sticker apps.
+const STICKER_SUPPORT_URL = "https://support.apple.com/en-us/104969";
+const STICKER_SUPPORT_TITLE =
+  "How to use iMessage apps on your iPhone and iPad";
 
 export const generateMetadata = async ({
   params,
@@ -85,6 +91,10 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
     ],
   ];
   const rows = infoRows.filter(([, value]) => Boolean(value));
+
+  // Sticker apps get a "Support" card pointing at Apple's iMessage-apps guide.
+  const isSticker = /sticker/i.test(app.genre || "");
+  const support = isSticker ? await fetchLinkPreview(STICKER_SUPPORT_URL) : null;
 
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-12">
@@ -184,6 +194,57 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
               </div>
             ))}
           </dl>
+        </section>
+      )}
+
+      {/* Support — Apple's iMessage-apps guide, for my sticker apps */}
+      {isSticker && (
+        <section className="mt-12">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3">
+            Support
+          </h2>
+          <a
+            href={STICKER_SUPPORT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-4 rounded-3xl border border-gray-200 dark:border-gray-700 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
+          >
+            {support?.image ? (
+              <img
+                src={support.image}
+                alt=""
+                className="w-16 h-16 rounded-2xl object-cover shrink-0"
+              />
+            ) : (
+              <span className="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0 text-indigo-500">
+                <svg
+                  className="w-6 h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </span>
+            )}
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold text-gray-800 dark:text-gray-200">
+                {support?.title || STICKER_SUPPORT_TITLE}
+              </span>
+              <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                {support?.description || "support.apple.com"}
+              </span>
+            </span>
+            <span className="shrink-0 self-center text-gray-400 dark:text-gray-500 group-hover:text-indigo-500 transition-colors">
+              <ArrowOut size={18} />
+            </span>
+          </a>
         </section>
       )}
 
