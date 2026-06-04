@@ -10,6 +10,9 @@ const nextConfig = {
     "/[app]": ["./public/screens/**/*"],
     "/[app]/privacy-policy": ["./public/screens/**/*"],
     "/privacy-policy/[app]": ["./public/screens/**/*"],
+    // The icon/apple-icon routes read public/profile.jpg at runtime.
+    "/icon": ["./public/profile.jpg"],
+    "/apple-icon": ["./public/profile.jpg"],
   },
 };
 
