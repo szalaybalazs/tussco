@@ -89,7 +89,7 @@ export const Screenshots = ({
         <div
           role="tablist"
           aria-label="Screenshot platform"
-          className="inline-flex mb-6 rounded-xl bg-gray-100 dark:bg-gray-700/60 p-1"
+          className="flex w-fit mx-auto mb-6 rounded-xl bg-gray-100 dark:bg-gray-700/60 p-1"
         >
           {groups.map((g) => {
             const active = g.platform === group.platform;
