@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { socials, appStore } from "./socials";
+import { socials, appStore, buyMeCoffee } from "./socials";
 
 const iconClasses =
   "w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center hover:scale-105 active:scale-95 transition-all text-gray-600 hover:text-indigo-500 dark:bg-gray-700 dark:text-indigo-300";
@@ -51,7 +51,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {[appStore, ...socials].map((social) => (
+          {[buyMeCoffee, appStore, ...socials].map((social) => (
             <a
               key={social.name}
               href={social.href}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { socials, appStore } from "./socials";
+import { socials, appStore, buyMeCoffee } from "./socials";
 
 const pillClasses =
   "inline-flex items-center gap-1 rounded-xl bg-gray-100 dark:bg-gray-700 px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 hover:scale-105 active:scale-95 w-fit transition-all";
@@ -137,7 +137,20 @@ const Header = () => {
             {headerTitle}
           </h1>
         </Link>
-        <div className="flex-1 flex justify-end">
+        <div className="flex-1 flex justify-end items-center gap-2">
+          {/* Buy Me a Coffee — always visible on mobile and desktop */}
+          <a
+            href={buyMeCoffee.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={buyMeCoffee.name}
+            className={iconClasses}
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d={buyMeCoffee.icon} />
+            </svg>
+          </a>
+
           {/* Tablet & desktop: inline icon row */}
           <div className="hidden md:flex gap-2">
             {links.map((social) => (
